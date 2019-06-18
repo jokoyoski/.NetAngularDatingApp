@@ -1,0 +1,67 @@
+Microsoft Windows [Version 10.0.16299.125]
+(c) 2017 Microsoft Corporation. All rights reserved.
+
+C:\Users\hp setup>mysql -u appuser -p
+Enter password: *************
+ERROR 1045 (28000): Access denied for user 'appuser'@'localhost' (using password: YES)
+
+C:\Users\hp setup>mysql -u AppUser -p
+Enter password: *************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 19
+Server version: 8.0.16 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> ^C
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.04 sec)
+
+mysql> show databases
+    -> show databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'show databases' at line 2
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| datingapp          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.22 sec)
+
+mysql> use datingapp
+Database changed
+mysql> show tables
+    -> ^C
+mysql> show tables;
++-----------------------+
+| Tables_in_datingapp   |
++-----------------------+
+| __efmigrationshistory |
+| likes                 |
+| messages              |
+| photos                |
+| users                 |
+| values                |
++-----------------------+
+6 rows in set (0.07 sec)
+
+mysql>

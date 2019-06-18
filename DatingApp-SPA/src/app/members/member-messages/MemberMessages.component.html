@@ -1,0 +1,66 @@
+<div class="card">
+<div class="card-body">
+<div *ngIf="messages?.length===0">
+<p>No Messages yet, send your first message</p>
+</div>
+<ul  style="overflow:auto;height: 400px;" class="chat">
+<li *ngFor="let message of messages">
+<div *ngIf="message.senderId==recipientId">
+  <span class="chat-img float-left">
+<img src="{{message.senderPhoto}}" alt="{{message.senderName}}" class="rounded-circle">
+  </span>
+<div class="chat-body">
+  <div class="header">
+<strong class="primary-font">{{message.senderName}}</strong>
+<small class="text-muted float-right">
+<span class="fa fa-clock-o">
+{{message.messageSent|date}}
+</span>
+</small>
+  </div>
+<p>{{message.content}}</p>
+</div>
+</div>
+
+<div  *ngIf="message.senderId!=recipientId">
+    <span class="chat-img float-left">
+  <img src="{{message.senderPhoto}}" alt="{{message.senderName}}" class="rounded-circle">
+    </span>
+  <div class="chat-body">
+    <div class="header">
+        <small class="text-muted float-right">
+            <span class="fa fa-clock-o">
+            {{message.messageSent|timeAgo}}
+            </span>
+            <span *ngIf="!message.isRead" class="text-danger">
+              (unread)
+                </span>
+                <span *ngIf="message.isRead" class="text-success">
+                    (Read  {{message.dateRead|timeAgo}})
+                      </span>
+            </small>
+  <strong class="primary-font">{{message.senderName}}</strong>
+  
+    </div>
+    <p>{{message.content}}</p>
+  </div>
+  </div>
+</li>
+</ul>
+</div>
+
+<div class="card-footer">
+<form #ngSubmitForm="ngForm"   (submit)="sendMessage()">
+  <div class="input-group">
+<input name="content" [(ngModel)]="anyMessage.content" type="text" required class="form-control input-sm" placeholder="Enter  your message"/>
+<div class="input-group-append">
+<button [disabled]="ngSubmitForm.invalid" class="btn btn1">Send Message</button>
+</div>
+<div>
+
+</div>
+  </div>
+</form>
+</div>
+</div>
+

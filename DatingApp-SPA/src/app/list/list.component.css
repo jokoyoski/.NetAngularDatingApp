@@ -1,0 +1,20 @@
+
+.hovering:hover{
+
+    transform: scale(1.2,1.2);
+    transition-duration :500ms;
+    transition-timing-function: ease-out;
+
+
+}
+
+.btn0{
+    color:#fff !important;
+    background-color: #d26e8e !important;
+  }
+  
+  
+  .btn1{
+    color:#fff !important;
+    background-color: #3a5878 !important;
+  }

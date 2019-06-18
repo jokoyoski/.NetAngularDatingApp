@@ -1,0 +1,24 @@
+.joka{
+ background-color:#3a5878;
+}
+
+
+.font-fam
+{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+ a .dropdown-item :hover{
+    background-color:#3a5878;
+    color:white
+}
+.text-colo{
+    color: white;
+}
+
+img{
+
+    max-height: 50px;
+    
+    display :inline;
+}

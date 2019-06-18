@@ -1,0 +1,100 @@
+
+
+
+
+
+
+
+<div *ngIf= "!loggedIn()">
+		<div class="header_left">
+			<img src="../../assets/web/images/rate.png" alt=""/>
+		</div>
+		<div class="logo">
+			<a href="index.html"><img src="../../assets/web/images/logo.png" alt=""/>
+				<span>Soulmate</span>
+			</a>
+		</div>
+		<div class="header_right">
+			<ul class="header_user_info">
+			  <a class="login" href="login.html">
+			
+			
+				<div class="clearfix"> </div>
+			  </a>
+			  <div class="clearfix"> </div>
+	    	</ul>
+       
+       
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+
+
+
+	<div *ngIf= "loggedIn()">
+		<div class="header_left">
+			<img src="../../assets/web/images/rate.png" alt=""/>
+		</div>
+		<div></div>
+		<div class="logo">
+			<a href="index.html"><img src="../../assets/web/images/logo.png" alt=""/>
+				<span>Soulmate</span>
+			</a>
+		</div>
+		<div class="header_right">
+			<ul class="header_user_info">
+				<span>
+					<img src="{{photoUrl}}">
+				
+				</span>
+			
+			  <a class="login"  (click)="loggedOut()">
+				<li class="user_desc"><span class="m_1"> </span>Log out</li>
+				<i class="user"> </i> 
+				
+				<div class="clearfix"> </div>
+			  </a>
+			  <div class="clearfix"> </div>
+				</ul>
+				<span style="color:#3a5778">Welcome {{authService.decodedTokenName}}</span>
+	
+		</div>
+
+		<div class="clearfix"> </div>
+	</div>
+	
+	  
+<nav class="navbar navbar-expand-lg navbar-dark joka">
+	<div class="container-fluid">
+		<a class="navbar-brand" [routerLink]="['/home']">Dating App</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+	  
+	  
+		
+		<div *ngIf="loggedIn()"   class="collapse navbar-collapse" id="navbarSupportedContent">
+		  <ul class="navbar-nav mr-auto">
+			<li class="nav-item" routerLinkActive="active">
+			  <a class="nav-link font-fam"    [routerLink]="['/members']"><span class="text-colo">Matches</span><span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item" routerLinkActive="active">
+			  <a class="nav-link font-fam text-colo"  [routerLink]="['/likes']"><span class="text-colo">Favourites</span></a>
+			</li>
+			<li class="nav-item" routerLinkActive="active">
+			  <a class="nav-link font-fam " [routerLink]="['/Messages']" ><span class="text-colo">Messages</span></a>
+			</li>
+		  
+		  </ul>
+	  
+	  
+		 <div >
+			<a class="nav-link font-fam text-colo" [routerLink]="['/member/edit']" > <i class="fa fa-user"></i><span class="text-colo">Edit Profile</span></a>
+		 </div>
+	  
+								  <!--if statment refrencing to our fxn in .ts-->        <!--the submit is the function that submits to the .ts file-->
+		 
+		</div> 
+	</div>
+	
+  </nav>
