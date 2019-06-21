@@ -72,8 +72,9 @@ public  IActionResult Register(UserForRegisterDTO userForRegisterDTO )
 [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDTO userForRegisterDTO)
         {
-   
-            var userInfo=this.authRepo.LoginUser(userForRegisterDTO.UserName,userForRegisterDTO.password);
+            var result=string.Empty;
+           try{
+   var userInfo=this.authRepo.LoginUser(userForRegisterDTO.UserName,userForRegisterDTO.password);
             if(userInfo==null)
             {
  return Unauthorized("You are mad ");
@@ -95,9 +96,14 @@ public  IActionResult Register(UserForRegisterDTO userForRegisterDTO )
             {
                 Subject= new ClaimsIdentity(claims),
                 Expires=DateTime.Now.AddHours(3),
-                SigningCredentials=creds
+                SigningCredentials=creds,
+                NotBefore=null
 
             };
+            if(tokenDescriptor.NotBefore!=null)
+            {
+                tokenDescriptor.NotBefore=null;
+            }
             var tokenHandler= new JwtSecurityTokenHandler ();
 
             var token= tokenHandler.CreateToken(tokenDescriptor); 
@@ -110,7 +116,16 @@ public  IActionResult Register(UserForRegisterDTO userForRegisterDTO )
                gender=photoUrl.Gender
             });
        
-            
+           }
+          
+                catch (Exception e)
+            {
+                result = string.Format("SaveOrderFulfilment - {0} , {1}", e.Message,
+                    e.InnerException != null ? e.InnerException.Message : "");
+            }
+            return StatusCode(500,result);
+           }
+         
+        
         }
     }
-}

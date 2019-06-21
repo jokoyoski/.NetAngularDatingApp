@@ -25,6 +25,7 @@ using DatingApp.API.Services;
 using AutoMapper;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using Microsoft.IdentityModel.Logging;
 
 namespace DatingApp.API
 {
@@ -39,9 +40,9 @@ namespace DatingApp.API
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)  
-        {    
+        {  IdentityModelEventSource.ShowPII = true;
             //this line was added after we added dbcontext                                                                                    //where defaultconnection in the appsettings.json we sepcify //this was added after we added connection string
-            services.AddDbContext<DataContext>(x=>x.UseMySql(Configuration.GetConnectionString("DefaultConnection")));    //1 
+            services.AddDbContext<DataContext>(x=>x.UseSqlServer(Configuration.GetConnectionString("DevConnection")));    //1 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddCors();
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
@@ -106,19 +107,12 @@ namespace DatingApp.API
             
 
            // app.UseHttpsRedirection();
-        // userSeed.SeedUsers();
-           app.UseCors(x=>x.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());  //cors 
+       // userSeed.SeedUsers();
+           app.UseCors(x=>x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());  //cors 
            app.UseAuthentication();  //for authentication middleware   
             app.UseDefaultFiles();
-          //  app.UseDefaultFiles();
+       app.UseStaticFiles();
           
-       //       app.UseStaticFiles(new StaticFileOptions         //this static files was added when i did ngbuild in my code but was not bringing the file to wwwroot
-  //  {
-   //     FileProvider = new PhysicalFileProvider(
-    //        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
-    //    RequestPath = "/wwwroot"
-//});
-            app.UseStaticFiles();
             app.UseMvc(routes=>{     //for fallback , this was used when we added angulr into wwwroot
                 routes.MapSpaFallbackRoute(name:"spa-fallback",defaults:new{  //this is just telling our app to redirect to the controller if it dosent undertsand the route
                     Controller="Fallback",Action="Index"  

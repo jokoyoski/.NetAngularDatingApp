@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using DatingApp.API.Data;
 using DatingApp.API.Model;
 using System.Linq;
+using System;
 using System.Text;
 
 namespace DatingApp.API.Interface
@@ -49,14 +50,25 @@ private bool VerifyPasswordHash(string password, byte[] passwordHash,byte[] pass
 }          
              public async  Task<User> RegisterUser(User user, string password)
         {
+            var result=string.Empty;
              byte [] passwordHash,passwordSalt;
             CreatePasswordHash(password,out passwordHash,out passwordSalt);
             
                    user.PasswordHash=passwordHash;
                       user.PasswordSalt=passwordSalt;
                       user.Password=null;
-                    await  dataContext.Users.AddAsync(user);
+               
+
+                       try{
+              await  dataContext.Users.AddAsync(user);
                      await dataContext.SaveChangesAsync();
+
+           
+           } catch (Exception e)
+            {
+                result = string.Format("User - {0} , {1}", e.Message,
+                    e.InnerException != null ? e.InnerException.Message : "");
+            }
                      return user;
             
         }

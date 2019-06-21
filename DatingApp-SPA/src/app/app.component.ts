@@ -18,15 +18,10 @@ export class AppComponent {
 
 // tslint:disable-next-line: use-life-cycle-interface
   ngOnInit() {
-    this.spinner.show();
- 
-    setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.spinner.hide();
-        console.log('okkkk');
-    }, 50000);
+
     const token = localStorage.getItem('token');
     const url = localStorage.getItem('picUrl');
+   
 
     const user = localStorage.getItem('userName');
     console.log('name', user);
@@ -41,9 +36,9 @@ export class AppComponent {
     }
 
     if (url) {
-      console.log(url)
+      console.log(url);
       this.authService.userPic = url;
-
+      
       this.authService.canMemberChangePhoto(url);
     }
   }

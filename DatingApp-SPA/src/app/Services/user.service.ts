@@ -18,7 +18,7 @@ import { Message } from 'Model/Message';
 })
 export class UserService {
 baseURL = environment.apiURL;
-
+mainUrl = 'http://jokoyoski200-001-site1.itempurl.com/api/';
 constructor(private httpClient: HttpClient) { }
 
 
@@ -41,7 +41,7 @@ params = params.append('PageSize', itemsPerPage);
 
   console.log(this.baseURL);
 
-  return this.httpClient.get<User[]>('http://localhost:5000/api/users', {observe: 'response', params}).pipe(map(
+  return this.httpClient.get<User[]>(this.mainUrl + 'users', {observe: 'response', params}).pipe(map(
 
   response => {
 
@@ -78,7 +78,7 @@ params = params.append('PageSize', itemsPerPage);
   }
   console.log(params);
 
-  return this.httpClient.get<UserLike[]>('http://localhost:5000/api/users/getuserlike', {observe: 'response', params}).pipe(map(
+  return this.httpClient.get<UserLike[]>(this.mainUrl + 'users' + '/getuserlike', {observe: 'response', params}).pipe(map(
 
   response => {
 
@@ -100,14 +100,14 @@ paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
 // tslint:disable-next-line:ban-types
 UpdateUser(id, model: User): Observable<Object> {
   // tslint:disable-next-line:ban-types
-  return this.httpClient.put<Object>('http://localhost:5000/api/users/' + id, model);
+  return this.httpClient.put<Object>(this.mainUrl +'users/' + id, model);
 }
 
 
 
 getUser(id): Observable<User> {
   console.log(id);
-  return this.httpClient.get<User>('http://localhost:5000/api/users/GetUser?id=' + id);
+  return this.httpClient.get<User>(this.mainUrl + 'users/GetUser?id=' + id);
 }
 
 
@@ -117,7 +117,7 @@ LikeUser(like: Like): Observable<Object> {
 
 
 console.log(like);
-  return this.httpClient.post<Object>('http://localhost:5000/api/users/likeuser', like).pipe(map(response => {
+return this.httpClient.post<Object>(this.mainUrl + 'users/likeuser', like).pipe(map(response => {
     console.log(response);
 
     return response;
@@ -126,7 +126,7 @@ console.log(like);
 }
 
 getMessageThread(id: string, recipientId: number) {
-return this.httpClient.get<Message[]>('http://localhost:5000/api/message/GetMessageThread?userId=' + id + '&recipientId=' + recipientId);
+return this.httpClient.get<Message[]>(this.mainUrl +'message/GetMessageThread?userId=' + id + '&recipientId=' + recipientId);
 }
 
 getMessages(page?, itemsPerPage?, messageContainer?): Observable<PaginatedResult<Message[]>> {
@@ -142,7 +142,7 @@ getMessages(page?, itemsPerPage?, messageContainer?): Observable<PaginatedResult
 
   const id = localStorage.getItem('userId');
 
-  return this.httpClient.get<Message[]>('http://localhost:5000/api/message/GetMessageForUser?userId=' + id,
+  return this.httpClient.get<Message[]>(this.mainUrl + 'message/GetMessageForUser?userId=' + id,
    {observe: 'response', params}).pipe(map(response => {
 
 paginatedResult.result = response.body;
@@ -155,15 +155,15 @@ return paginatedResult;
 }
 
 sendMessage(message: any) {
- 
-  return this.httpClient.post<Message>('http://localhost:5000/api/message/CreateMessage?userId=' + message.userId, message);
+
+  return this.httpClient.post<Message>(this.mainUrl +'message/CreateMessage?userId=' + message.userId, message);
 }
 deleteMessage(id: number, userId: string) {
-  return this.httpClient.get<Object>('http://localhost:5000/api/message/DeleteMessage?MessageId=' + id + '&userId=' + userId);
+  return this.httpClient.get<Object>(this.mainUrl + 'message/DeleteMessage?MessageId=' + id + '&userId=' + userId);
 }
 markAsRead(id: number, userId: number) {
   console.log(3);
-  return this.httpClient.get<Object>('http://localhost:5000/api/message/MarkAsRead?userId=' + userId + '&id=' + id).subscribe();
+  return this.httpClient.get<Object>(this.mainUrl + 'message/MarkAsRead?userId=' + userId + '&id=' + id).subscribe();
 
 }
 }

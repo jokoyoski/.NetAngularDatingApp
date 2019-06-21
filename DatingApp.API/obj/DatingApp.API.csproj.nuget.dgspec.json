@@ -1,28 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hp setup\\Documents\\GitHub\\DatingApp\\DatingApp.API\\DatingApp.API.csproj": {}
+    "C:\\Users\\Automata\\Documents\\GitHub\\.NetAngularDatingApp\\DatingApp.API\\DatingApp.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hp setup\\Documents\\GitHub\\DatingApp\\DatingApp.API\\DatingApp.API.csproj": {
+    "C:\\Users\\Automata\\Documents\\GitHub\\.NetAngularDatingApp\\DatingApp.API\\DatingApp.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hp setup\\Documents\\GitHub\\DatingApp\\DatingApp.API\\DatingApp.API.csproj",
+        "projectUniqueName": "C:\\Users\\Automata\\Documents\\GitHub\\.NetAngularDatingApp\\DatingApp.API\\DatingApp.API.csproj",
         "projectName": "DatingApp.API",
-        "projectPath": "C:\\Users\\hp setup\\Documents\\GitHub\\DatingApp\\DatingApp.API\\DatingApp.API.csproj",
-        "packagesPath": "C:\\Users\\hp setup\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hp setup\\Documents\\GitHub\\DatingApp\\DatingApp.API\\obj\\",
+        "projectPath": "C:\\Users\\Automata\\Documents\\GitHub\\.NetAngularDatingApp\\DatingApp.API\\DatingApp.API.csproj",
+        "packagesPath": "C:\\Users\\Automata\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Automata\\Documents\\GitHub\\.NetAngularDatingApp\\DatingApp.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\hp setup\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Automata\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

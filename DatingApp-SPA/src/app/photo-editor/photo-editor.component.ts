@@ -48,19 +48,20 @@ uploader: FileUploader;
  }
  MakeMain( id: number) {
 
-   console.log(identifierName);
+   
    return this.authService.MakeMain(id).subscribe((res) => {
 
-    console.log(res);
+   
 
     this.photo = res;
        // returtn the photo url
-    console.log(this.photo.photoUrl, 'res');
+
     //  this.getMemberChangePhoto.emit(this.photo.photoURl); // emit the url
+    console.log(this.photo.photoUrl);
     this.authService.canMemberChangePhoto(this.photo.photoUrl);
 
 
-    localStorage.setItem('picUrl', JSON.stringify(this.photo.photoUrl));
+    localStorage.setItem('picUrl', this.photo.photoUrl);
 
     this.errors = res;
 

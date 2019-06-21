@@ -1,170 +1,59 @@
- "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/women/38.jpg",
-          "isMain": true,
-          "description": "Adipisicing tempor labore officia commodo est nostrud sit nostrud Lorem ea tempor velit aute occaecat."
-        }
-      ]
-	  
-	  
-	   "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/women/88.jpg",
-          "isMain": true,
-          "description": "Nisi est ea velit excepteur anim nisi sunt minim consequat sunt do irure."
-        }
-      ]
-	  
-	  
-	   "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/women/1.jpg",
-          "isMain": true,
-          "description": "Dolore eu dolor elit ad eu in officia tempor magna nulla do."
-        }
-      ]
-	  
-	   "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/women/87.jpg",
-          "isMain": true,
-          "description": "Cupidatat laboris laboris eu ullamco voluptate sint non nostrud."
-        }
-      ]
-	  
-	  
-	   "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/women/56.jpg",
-          "isMain": true,
-          "description": "Elit commodo adipisicing velit esse laboris cillum occaecat aute."
-        }
-      ]
-	  
-	  
-	  
-	   "Photos": [
-            {
-              "url": "https://randomuser.me/api/portraits/men/55.jpg",
-              "isMain": true,
-              "description": "Sunt incididunt reprehenderit ex consequat ex laborum pariatur ut dolore enim elit aute veniam."
-            }
-          ]
-		  
-		  
-		   "Photos": [
-            {
-              "url": "https://randomuser.me/api/portraits/men/60.jpg",
-              "isMain": true,
-              "description": "Consectetur est cupidatat officia sint aliquip."
-            }
-          ]
-		  
-		  
-		  
-		    "Photos": [
-            {
-              "url": "https://randomuser.me/api/portraits/men/85.jpg",
-              "isMain": true,
-              "description": "Do labore amet deserunt consectetur et commodo anim nisi incididunt commodo aliquip minim voluptate."
-            }
-          ]
-		  
-		  
-		  
-		   "Photos": [
-            {
-              "url": "https://randomuser.me/api/portraits/men/73.jpg",
-              "isMain": true,
-              "description": "Tempor veniam Lorem et nostrud ipsum anim eiusmod eu do."
-            }
-          ]
-		  
-		  
-		   "Photos": [
-            {
-              "url": "https://randomuser.me/api/portraits/men/25.jpg",
-              "isMain": true,
-              "description": "Eu anim ullamco esse incididunt quis commodo magna ad."
-            }
-          ]
-		  
-		  
-		  
-		  
-		  
-        {
-          "UserId":1,
-          "URl": "https://randomuser.me/api/portraits/women/38.jpg",
-          "IsMain": true,
-          "description": "Adipisicing tempor labore officia commodo est nostrud sit nostrud Lorem ea tempor velit aute occaecat."
-     
-        },
-        {
-          "UserId":2,
-          "URl": "https://randomuser.me/api/portraits/women/88.jpg",
-          "IsMain": true,
-          "description": "Adipisicing tempor labore officia commodo est nostrud sit nostrud Lorem ea tempor velit aute occaecat."
-     
-        }
-		
-		
-		
-		  {
-          "UserId":3,
-          "URl": "https://randomuser.me/api/portraits/women/1.jpg",
-          "IsMain": true,
-          "description": "Adipisicing tempor labore officia commodo est nostrud sit nostrud Lorem ea tempor velit aute occaecat."
-     
-        }
-		
-		
-		  {
-          "UserId":4,
-          "URl": "https://randomuser.me/api/portraits/women/87.jpg",
-          "IsMain": true,
-          "description": "Adipisicing tempor labore officia commodo est nostrud sit nostrud Lorem ea tempor velit aute occaecat."
-     
-        }
-		
-		  {
-          "UserId":5,
-          "URl": "https://randomuser.me/api/portraits/women/56.jpg",
-          "IsMain": true,
-          "description": "Adipisicing tempor labore officia commodo est nostrud sit nostrud Lorem ea tempor velit aute occaecat."
-     
-        },
-		  {
-          "UserId":6,
-          "URl": "https://randomuser.me/api/portraits/men/55.jpg",
-          "IsMain": true,
-          "description": "Adipisicing tempor labore officia commodo est nostrud sit nostrud Lorem ea tempor velit aute occaecat."
-     
-        },  {
-          "UserId":7,
-          "URl": "https://randomuser.me/api/portraits/men/60.jpg",
-          "IsMain": true,
-          "description": "Adipisicing tempor labore officia commodo est nostrud sit nostrud Lorem ea tempor velit aute occaecat."
-     
-        },
-		 {
-          "UserId":8,
-          "URl": "https://randomuser.me/api/portraits/men/85.jpg",
-          "IsMain": true,
-          "description": "Adipisicing tempor labore officia commodo est nostrud sit nostrud Lorem ea tempor velit aute occaecat."
-     
-        },
-		 {
-          "UserId":9,
-          "URl": "https://randomuser.me/api/portraits/men/73.jpg",
-          "IsMain": true,
-          "description": "Adipisicing tempor labore officia commodo est nostrud sit nostrud Lorem ea tempor velit aute occaecat."
-     
-        }, {
-          "UserId":10,
-          "URl": "https://randomuser.me/api/portraits/men/25.jpg",
-          "IsMain": true,
-          "description": "Adipisicing tempor labore officia commodo est nostrud sit nostrud Lorem ea tempor velit aute occaecat."
-     
-        }
-		,
+<div class="text-center mt-3">
+  <h2>Your matches - {{pagination.totalItems}} found</h2>
+</div>
+<div class="container-fluid text-center">
+
+  <form class="form-inline" #form="ngForm" (ngSubmit)="loadUsers()" novalidate>
+      <div class="form-group">
+        <label for="minAge">Age From</label>
+        <input type="number" [(ngModel)]="userParams.minAge" class="form-control ml-1" style="width: 70px" id="minAge" name="minAge">
+      </div>
+    
+      <div class="form-group px-2">
+        <label for="maxAge">Age To</label>
+        <input type="number" [(ngModel)]="userParams.maxAge" class="form-control ml-1" style="width: 70px" id="maxAge" name="maxAge">
+      </div>
+    
+      <div class="form-group px-2">
+        <label for="gender">Show: </label>
+        <select class="form-control ml-1" [(ngModel)]="userParams.gender" style="width: 130px" id="gender" name="gender">
+          <option *ngFor="let gender of genderList"[value]='gender.value'>
+    {{gender.display}}
+          </option>
+        </select>
+      </div>
+  
+      <div class="form-group px-2">
+          <label for="gender">Activity: </label>
+          <select class="form-control ml-1" [(ngModel)]="userParams.activity" style="width: 130px" id="activity" name="activity">
+            <option *ngFor="let a of activity"[value]='a.value'>
+      {{a.display}}
+            </option>
+          </select>
+        </div>
+      <button type="submit" class="btn  btn0" style="margin-left:10px">Apply Filters</button>
+      <button type="button" class="btn btn-info" (click)="resetFilters()" style="margin-left:10px">Reset Filter</button>
+    
+    </form>
+    <br>
+</div>
+
+
+
+<div class="container mt-3">
+  <div class=row>
+      <div *ngFor="let user of users" class="col-lg-2 col-md-3 col-sm-6">
+              <app-member-card [user]="user"></app-member-card>
+      </div>
+          
+  </div>
+      
+
+</div>
+
+<div class="d-flex justify-content-center">
+  <pagination [boundaryLinks]="true"  [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" [(ngModel)]="pagination.currentPage"
+  previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+
+</pagination>
+</div>

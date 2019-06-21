@@ -11,14 +11,15 @@ decodedToken: any;
 decodedTokenName: any;
 userPic: any;
 
-pic = '../../assets/web/images/user.png';
+  pic: any = '../../assets/web/images/user.png';
 result: any;
 photoUrl = new BehaviorSubject<string>('../../assets/web/images/user.png');
 currentPhotoUrl = this.photoUrl.asObservable();
   jwtHelper = new JwtHelperService();
-   loginURl = 'http://localhost:5000/api/auth/Login';
+  
    Gender: any;
-   registerURL = 'http://localhost:5000/api/auth/register';
+   mainUrl ='http://jokoyoski200-001-site1.itempurl.com/api/';
+   registerURL = 'http://localhost:5000/api/';
   httpClient: any;
 constructor(private http: HttpClient) { }
 
@@ -29,7 +30,9 @@ this.photoUrl.next(photoUrl);   // the behaviour subject has a next attr which s
 }
 
 login(model: any) {
-        return this.http.post(this.loginURl, model).pipe( // the post is an observable so we always need to pipe an observable
+
+        return this.http.post('http://jokoyoski200-001-site1.itempurl.com/api/auth/Login', model)
+        .pipe( // the post is an observable so we always need to pipe an observable
 
           map((response: any) => {   // maping of the values
 
@@ -52,11 +55,15 @@ login(model: any) {
               localStorage.setItem('userName', this.decodedToken.unique_name);
 
               this.decodedTokenName = this.decodedToken.unique_name;
+              console.log(this.result.photoUrl);
 
-              if (this.result.photoUrl !== undefined) {
+              if (this.result.photoUrl !== null) {
                 localStorage.setItem('picUrl', this.result.photoUrl);
-                console.log(this.result.photoUrl);
+                this.userPic = this.result.photoUrl;
                 this.canMemberChangePhoto(this.result.photoUrl);
+                } else {
+                  this.canMemberChangePhoto(this.pic);
+                  localStorage.setItem('picUrl', this.pic);
                 }
 
 
@@ -71,21 +78,21 @@ login(model: any) {
 
         Upload(file: File) {
           const tokenId = localStorage.getItem('userId');
-          const url = 'http://localhost:5000/api/photos/' + tokenId + '/savePhoto';
+          const url = this.mainUrl + 'photos/' + tokenId + '/savePhoto';
           const fd = new FormData();
           fd.append('FormFile', file, file.name);
           return this.http.post(url, fd);
         }
   MakeMain(photoId: number) {
     const tokenId = localStorage.getItem('userId');
-    const url = 'http://localhost:5000/api/photos/' + photoId + '/' + tokenId + '/updatePhoto';
+    const url =  this.mainUrl + 'photos/' + photoId + '/' + tokenId + '/updatePhoto';
     return this.http.get(url);
 
   }
 
 
         register(model: any) {
-          return this.http.post(this.registerURL, model);
+          return this.http.post('http://jokoyoski200-001-site1.itempurl.com/api/Auth/Register', model);
         }
           loggedIn() {
           const token = localStorage.getItem('token');
@@ -103,7 +110,7 @@ login(model: any) {
 
           DeletePhoto(photoId: number) {
             const tokenId = localStorage.getItem('userId');
-            const url = 'http://localhost:5000/api/photos/' + photoId + '/' + tokenId + '/deletePhoto';
+            const url =  this.mainUrl + 'photos/' + photoId + '/' + tokenId + '/deletePhoto';
             return this.http.get(url);
 }
 }

@@ -510,15 +510,16 @@ var AuthService = /** @class */ (function () {
         this.photoUrl = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"]('../../assets/web/images/user.png');
         this.currentPhotoUrl = this.photoUrl.asObservable();
         this.jwtHelper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_5__["JwtHelperService"]();
-        this.loginURl = 'http://localhost:5000/api/auth/Login';
-        this.registerURL = 'http://localhost:5000/api/auth/register';
+        this.mainUrl = 'http://jokoyoski200-001-site1.itempurl.com/api/';
+        this.registerURL = 'http://localhost:5000/api/';
     }
     AuthService.prototype.canMemberChangePhoto = function (photoUrl) {
         this.photoUrl.next(photoUrl); // the behaviour subject has a next attr which signifies the next value
     };
     AuthService.prototype.login = function (model) {
         var _this = this;
-        return this.http.post(this.loginURl, model).pipe(// the post is an observable so we always need to pipe an observable
+        return this.http.post('http://jokoyoski200-001-site1.itempurl.com/api/auth/Login', model)
+            .pipe(// the post is an observable so we always need to pipe an observable
         Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
             _this.result = response;
             if (_this.result) {
@@ -528,28 +529,33 @@ var AuthService = /** @class */ (function () {
                 localStorage.setItem('userId', _this.decodedToken.nameid);
                 localStorage.setItem('userName', _this.decodedToken.unique_name);
                 _this.decodedTokenName = _this.decodedToken.unique_name;
-                if (_this.result.photoUrl !== undefined) {
+                console.log(_this.result.photoUrl);
+                if (_this.result.photoUrl !== null) {
                     localStorage.setItem('picUrl', _this.result.photoUrl);
-                    console.log(_this.result.photoUrl);
+                    _this.userPic = _this.result.photoUrl;
                     _this.canMemberChangePhoto(_this.result.photoUrl);
+                }
+                else {
+                    _this.canMemberChangePhoto(_this.pic);
+                    localStorage.setItem('picUrl', _this.pic);
                 }
             }
         }));
     };
     AuthService.prototype.Upload = function (file) {
         var tokenId = localStorage.getItem('userId');
-        var url = 'http://localhost:5000/api/photos/' + tokenId + '/savePhoto';
+        var url = this.mainUrl + 'photos/' + tokenId + '/savePhoto';
         var fd = new FormData();
         fd.append('FormFile', file, file.name);
         return this.http.post(url, fd);
     };
     AuthService.prototype.MakeMain = function (photoId) {
         var tokenId = localStorage.getItem('userId');
-        var url = 'http://localhost:5000/api/photos/' + photoId + '/' + tokenId + '/updatePhoto';
+        var url = this.mainUrl + 'photos/' + photoId + '/' + tokenId + '/updatePhoto';
         return this.http.get(url);
     };
     AuthService.prototype.register = function (model) {
-        return this.http.post(this.registerURL, model);
+        return this.http.post('http://jokoyoski200-001-site1.itempurl.com/api/Auth/Register', model);
     };
     AuthService.prototype.loggedIn = function () {
         var token = localStorage.getItem('token');
@@ -561,7 +567,7 @@ var AuthService = /** @class */ (function () {
     };
     AuthService.prototype.DeletePhoto = function (photoId) {
         var tokenId = localStorage.getItem('userId');
-        var url = 'http://localhost:5000/api/photos/' + photoId + '/' + tokenId + '/deletePhoto';
+        var url = this.mainUrl + 'photos/' + photoId + '/' + tokenId + '/deletePhoto';
         return this.http.get(url);
     };
     AuthService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -751,6 +757,7 @@ var UserService = /** @class */ (function () {
     function UserService(httpClient) {
         this.httpClient = httpClient;
         this.baseURL = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].apiURL;
+        this.mainUrl = 'http://jokoyoski200-001-site1.itempurl.com/api/';
     }
     UserService.prototype.getUsers = function (page, itemsPerPage, userParams) {
         var paginatedResult = new Model_pagination__WEBPACK_IMPORTED_MODULE_4__["PaginatedResult"]();
@@ -767,7 +774,7 @@ var UserService = /** @class */ (function () {
         }
         console.log(params);
         console.log(this.baseURL);
-        return this.httpClient.get('http://localhost:5000/api/users', { observe: 'response', params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (response) {
+        return this.httpClient.get(this.mainUrl + 'users', { observe: 'response', params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (response) {
             paginatedResult.result = response.body;
             if (response.headers.get('Pagination') != null) {
                 console.log(JSON.parse(response.headers.get('Pagination')));
@@ -789,7 +796,7 @@ var UserService = /** @class */ (function () {
             params = params.append('UserStatusLikes', userParams);
         }
         console.log(params);
-        return this.httpClient.get('http://localhost:5000/api/users/getuserlike', { observe: 'response', params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (response) {
+        return this.httpClient.get(this.mainUrl + 'users' + '/getuserlike', { observe: 'response', params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (response) {
             console.log(response);
             paginatedResult.result = response.body;
             if (response.headers.get('Pagination') != null) {
@@ -803,21 +810,21 @@ var UserService = /** @class */ (function () {
     // tslint:disable-next-line:ban-types
     UserService.prototype.UpdateUser = function (id, model) {
         // tslint:disable-next-line:ban-types
-        return this.httpClient.put('http://localhost:5000/api/users/' + id, model);
+        return this.httpClient.put(this.mainUrl + 'users/' + id, model);
     };
     UserService.prototype.getUser = function (id) {
         console.log(id);
-        return this.httpClient.get('http://localhost:5000/api/users/GetUser?id=' + id);
+        return this.httpClient.get(this.mainUrl + 'users/GetUser?id=' + id);
     };
     UserService.prototype.LikeUser = function (like) {
         console.log(like);
-        return this.httpClient.post('http://localhost:5000/api/users/likeuser', like).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (response) {
+        return this.httpClient.post(this.mainUrl + 'users/likeuser', like).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (response) {
             console.log(response);
             return response;
         }));
     };
     UserService.prototype.getMessageThread = function (id, recipientId) {
-        return this.httpClient.get('http://localhost:5000/api/message/GetMessageThread?userId=' + id + '&recipientId=' + recipientId);
+        return this.httpClient.get(this.mainUrl + 'message/GetMessageThread?userId=' + id + '&recipientId=' + recipientId);
     };
     UserService.prototype.getMessages = function (page, itemsPerPage, messageContainer) {
         var paginatedResult = new Model_pagination__WEBPACK_IMPORTED_MODULE_4__["PaginatedResult"]();
@@ -828,7 +835,7 @@ var UserService = /** @class */ (function () {
         }
         params = params.append('MessageContainer', messageContainer);
         var id = localStorage.getItem('userId');
-        return this.httpClient.get('http://localhost:5000/api/message/GetMessageForUser?userId=' + id, { observe: 'response', params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (response) {
+        return this.httpClient.get(this.mainUrl + 'message/GetMessageForUser?userId=' + id, { observe: 'response', params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (response) {
             paginatedResult.result = response.body;
             if (response.headers.get('Pagination') != null) {
                 console.log(JSON.parse(response.headers.get('Pagination')));
@@ -838,14 +845,14 @@ var UserService = /** @class */ (function () {
         }));
     };
     UserService.prototype.sendMessage = function (message) {
-        return this.httpClient.post('http://localhost:5000/api/message/CreateMessage?userId=' + message.userId, message);
+        return this.httpClient.post(this.mainUrl + 'message/CreateMessage?userId=' + message.userId, message);
     };
     UserService.prototype.deleteMessage = function (id, userId) {
-        return this.httpClient.get('http://localhost:5000/api/message/DeleteMessage?MessageId=' + id + '&userId=' + userId);
+        return this.httpClient.get(this.mainUrl + 'message/DeleteMessage?MessageId=' + id + '&userId=' + userId);
     };
     UserService.prototype.markAsRead = function (id, userId) {
         console.log(3);
-        return this.httpClient.get('http://localhost:5000/api/message/MarkAsRead?userId=' + userId + '&id=' + id).subscribe();
+        return this.httpClient.get(this.mainUrl + 'message/MarkAsRead?userId=' + userId + '&id=' + id).subscribe();
     };
     UserService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -960,13 +967,6 @@ var AppComponent = /** @class */ (function () {
     }
     // tslint:disable-next-line: use-life-cycle-interface
     AppComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.spinner.show();
-        setTimeout(function () {
-            /** spinner ends after 5 seconds */
-            _this.spinner.hide();
-            console.log('okkkk');
-        }, 50000);
         var token = localStorage.getItem('token');
         var url = localStorage.getItem('picUrl');
         var user = localStorage.getItem('userName');
@@ -1354,7 +1354,7 @@ module.exports = ".btn0\r\n{\r\nbackground-color: #d26e8e;\r\ncolor: white;\r\n}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"text-center mt-3\">\r\n    <h2>Your matches - {{pagination.totalItems}} found</h2>\r\n  </div>\r\n<div class=\"container-fluid text-center\">\r\n\r\n    <form class=\"form-inline\" #form=\"ngForm\" (ngSubmit)=\"loadUsers()\" novalidate>\r\n        <div class=\"form-group\">\r\n          <label for=\"minAge\">Age From</label>\r\n          <input type=\"number\" [(ngModel)]=\"userParams.minAge\" class=\"form-control ml-1\" style=\"width: 70px\" id=\"minAge\" name=\"minAge\">\r\n        </div>\r\n      \r\n        <div class=\"form-group px-2\">\r\n          <label for=\"maxAge\">Age To</label>\r\n          <input type=\"number\" [(ngModel)]=\"userParams.maxAge\" class=\"form-control ml-1\" style=\"width: 70px\" id=\"maxAge\" name=\"maxAge\">\r\n        </div>\r\n      \r\n        <div class=\"form-group px-2\">\r\n          <label for=\"gender\">Show: </label>\r\n          <select class=\"form-control ml-1\" [(ngModel)]=\"userParams.gender\" style=\"width: 130px\" id=\"gender\" name=\"gender\">\r\n            <option *ngFor=\"let gender of genderList\"[value]='gender.value'>\r\n      {{gender.display}}\r\n            </option>\r\n          </select>\r\n        </div>\r\n    \r\n        <div class=\"form-group px-2\">\r\n            <label for=\"gender\">Activity: </label>\r\n            <select class=\"form-control ml-1\" [(ngModel)]=\"userParams.activity\" style=\"width: 130px\" id=\"activity\" name=\"activity\">\r\n              <option *ngFor=\"let a of activity\"[value]='a.value'>\r\n        {{a.display}}\r\n              </option>\r\n            </select>\r\n          </div>\r\n        <button type=\"submit\" class=\"btn  btn0\" style=\"margin-left:10px\">Apply Filters</button>\r\n        <button type=\"button\" class=\"btn btn-info\" (click)=\"resetFilters()\" style=\"margin-left:10px\">Reset Filter</button>\r\n      \r\n      </form>\r\n      <br>\r\n</div>\r\n\r\n\r\n  \r\n<div class=\"container mt-3\">\r\n    <div class=row>\r\n        <div *ngFor=\"let user of users\" class=\"col-lg-2 col-md-3 col-sm-6\">\r\n                <app-member-card [user]=\"user\"></app-member-card>\r\n        </div>\r\n            \r\n    </div>\r\n        \r\n\r\n</div>\r\n\r\n<div class=\"d-flex justify-content-center\">\r\n    <pagination [boundaryLinks]=\"true\"  [totalItems]=\"pagination.totalItems\" [itemsPerPage]=\"pagination.itemsPerPage\" (pageChanged)=\"pageChanged($event)\" [(ngModel)]=\"pagination.currentPage\"\r\n    previousText=\"&lsaquo;\" nextText=\"&rsaquo;\" firstText=\"&laquo;\" lastText=\"&raquo;\">\r\n\r\n</pagination>\r\n</div>\r\n"
+module.exports = "<div class=\"text-center mt-3\">\r\n  <h2>Your matches - {{pagination.totalItems}} found</h2>\r\n</div>\r\n<div class=\"container-fluid text-center\">\r\n\r\n  <form class=\"form-inline\" #form=\"ngForm\" (ngSubmit)=\"loadUsers()\" novalidate>\r\n      <div class=\"form-group\">\r\n        <label for=\"minAge\">Age From</label>\r\n        <input type=\"number\" [(ngModel)]=\"userParams.minAge\" class=\"form-control ml-1\" style=\"width: 70px\" id=\"minAge\" name=\"minAge\">\r\n      </div>\r\n    \r\n      <div class=\"form-group px-2\">\r\n        <label for=\"maxAge\">Age To</label>\r\n        <input type=\"number\" [(ngModel)]=\"userParams.maxAge\" class=\"form-control ml-1\" style=\"width: 70px\" id=\"maxAge\" name=\"maxAge\">\r\n      </div>\r\n    \r\n      <div class=\"form-group px-2\">\r\n        <label for=\"gender\">Show: </label>\r\n        <select class=\"form-control ml-1\" [(ngModel)]=\"userParams.gender\" style=\"width: 130px\" id=\"gender\" name=\"gender\">\r\n          <option *ngFor=\"let gender of genderList\"[value]='gender.value'>\r\n    {{gender.display}}\r\n          </option>\r\n        </select>\r\n      </div>\r\n  \r\n      <div class=\"form-group px-2\">\r\n          <label for=\"gender\">Activity: </label>\r\n          <select class=\"form-control ml-1\" [(ngModel)]=\"userParams.activity\" style=\"width: 130px\" id=\"activity\" name=\"activity\">\r\n            <option *ngFor=\"let a of activity\"[value]='a.value'>\r\n      {{a.display}}\r\n            </option>\r\n          </select>\r\n        </div>\r\n      <button type=\"submit\" class=\"btn  btn0\" style=\"margin-left:10px\">Apply Filters</button>\r\n      <button type=\"button\" class=\"btn btn-info\" (click)=\"resetFilters()\" style=\"margin-left:10px\">Reset Filter</button>\r\n    \r\n    </form>\r\n    <br>\r\n</div>\r\n\r\n\r\n\r\n<div class=\"container mt-3\">\r\n  <div class=row>\r\n      <div *ngFor=\"let user of users\" class=\"col-lg-2 col-md-3 col-sm-6\">\r\n              <app-member-card [user]=\"user\"></app-member-card>\r\n      </div>\r\n          \r\n  </div>\r\n      \r\n\r\n</div>\r\n\r\n<div class=\"d-flex justify-content-center\">\r\n  <pagination [boundaryLinks]=\"true\"  [totalItems]=\"pagination.totalItems\" [itemsPerPage]=\"pagination.itemsPerPage\" (pageChanged)=\"pageChanged($event)\" [(ngModel)]=\"pagination.currentPage\"\r\n  previousText=\"&lsaquo;\" nextText=\"&rsaquo;\" firstText=\"&laquo;\" lastText=\"&raquo;\">\r\n\r\n</pagination>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1719,12 +1719,11 @@ var MemberEditComponent = /** @class */ (function () {
     MemberEditComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.authService.currentPhotoUrl.subscribe(function (photoUrl) {
-            console.log(photoUrl);
             _this.photoUrl = photoUrl;
         });
         this.route.data.subscribe(function (data) {
             _this.user = data.user;
-            // console.log(this.user.gendero);
+            console.log(_this.user);
         });
     };
     MemberEditComponent.prototype.updateUser = function () {
@@ -2002,8 +2001,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/index.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _angular_compiler__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/compiler */ "./node_modules/@angular/compiler/fesm5/compiler.js");
-
 
 
 
@@ -2034,15 +2031,13 @@ var PhotoEditorComponent = /** @class */ (function () {
     };
     PhotoEditorComponent.prototype.MakeMain = function (id) {
         var _this = this;
-        console.log(_angular_compiler__WEBPACK_IMPORTED_MODULE_7__["identifierName"]);
         return this.authService.MakeMain(id).subscribe(function (res) {
-            console.log(res);
             _this.photo = res;
             // returtn the photo url
-            console.log(_this.photo.photoUrl, 'res');
             //  this.getMemberChangePhoto.emit(this.photo.photoURl); // emit the url
+            console.log(_this.photo.photoUrl);
             _this.authService.canMemberChangePhoto(_this.photo.photoUrl);
-            localStorage.setItem('picUrl', JSON.stringify(_this.photo.photoUrl));
+            localStorage.setItem('picUrl', _this.photo.photoUrl);
             _this.errors = res;
             _this.alertifyService.success(_this.errors.status);
         });
@@ -2106,7 +2101,7 @@ module.exports = ".btn0\r\n{\r\nbackground-color: #d26e8e;\r\ncolor: white;\r\n}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!---->\r\n\r\n\r\n\r\n\r\n<body>\r\n    \r\n    <div class=\"profile_banner\">\r\n      <div class=\"container\"> \r\n         <h3>Login</h3>\r\n      </div>\r\n    </div>\r\n    <div class='profiles'>\r\n      <div class=\"container\">\r\n        <div class=\"account_grid row\">\r\n           <div class=\"col-md-6 login-left\">\r\n               <h3>NEW CUSTOMERS</h3>\r\n             <p class='myfont'>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>\r\n \r\n             \r\n             <form [formGroup]=\"registerForm\" (submit)=\"register()\">\r\n\r\n                <div class=\"form-group\">\r\n                    <label class=\"control-label\" style=\"margin-right:10px\">I am a: </label>\r\n                    <label class=\"radio-inline\">\r\n                      <input class=\"mr-3\" type=\"radio\" value=\"male\" formControlName=\"Gender\">Male\r\n                    </label>\r\n                    <label class=\"radio-inline ml-3\">\r\n                      <input class=\"mr-3\" type=\"radio\" value=\"female\" formControlName=\"Gender\">Female\r\n                    </label>\r\n                  </div>\r\n                <div class=\"form-group\">\r\n                      <!--has to be same name as the one on the component-->\r\n                    <input formControlName=\"Email\" placeholder=\"UserName\"  type=\"text\" [ngClass]=\"{'is-invalid': registerForm.get('UserName').errors && registerForm.get('UserName').touched }\" class=\"form-control \"/>\r\n               <div class=\"invalid-feedback\">Please choose a UserName</div>\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                      <input [ngClass]=\"{'is-invalid': registerForm.get('KnownAs').errors && registerForm.get('KnownAs').touched}\" class=\"form-control\"\r\n                        placeholder=\"Known As\" formControlName=\"KnownAs\">\r\n                      <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('KnownAs').touched && registerForm.get('KnownAs').hasError('required')\">Known as is required</div>\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <input [ngClass]=\"{'is-invalid': registerForm.get('City').errors && registerForm.get('City').touched}\" class=\"form-control\"\r\n                          placeholder=\"City\" formControlName=\"City\">\r\n                        <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('City').touched && registerForm.get('City').hasError('required')\">City is required</div>\r\n                      </div>\r\n                      <div class=\"form-group\">\r\n                          <input [ngClass]=\"{'is-invalid': registerForm.get('DateOfBirth').errors && registerForm.get('DateOfBirth').touched}\" class=\"form-control\"\r\n                            placeholder=\"Date of Birth\" formControlName=\"DateOfBirth\" type=\"date\">\r\n                          <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('DateOfBirth').touched && registerForm.get('DateOfBirth').hasError('required')\">Date of Birth is required</div>\r\n                        </div>\r\n                      <div class=\"form-group\">\r\n                        <input [ngClass]=\"{'is-invalid': registerForm.get('Country').errors && registerForm.get('Country').touched}\" class=\"form-control\"\r\n                          placeholder=\"Country\" formControlName=\"Country\">\r\n                        <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('Country').touched && registerForm.get('Country').hasError('required')\">Country is required</div>\r\n                      </div>\r\n                    \r\n                <div class=\"form-group\">\r\n                  <label class=\"control-label\" style=\"margin-right:10px\">I am Looking For: </label>\r\n                  <label class=\"radio-inline\">\r\n                    <input class=\"mr-3\" type=\"radio\" value=\"female\" formControlName=\"LookingFor\">FeMale\r\n                  </label>\r\n                  <label class=\"radio-inline ml-3\">\r\n                    <input class=\"mr-3\" type=\"radio\" value=\"male\" formControlName=\"LookingFor\">male\r\n                  </label>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                   \r\n                    <input [ngClass]=\"{'is-invalid': registerForm.get('Password').errors && registerForm.get('Password').touched }\" placeholder=\"Password\" formControlName=\"Password\"  type=\"text\" class=\"form-control\"/>\r\n                     <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('Password').hasError('required') && registerForm.get('Password').touched \">Please choose a Password</div>\r\n\r\n                     <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('Password').hasError('minlength') && registerForm.get('Password').touched \">Please require at least 4 characters</div>\r\n\r\n                  </div>\r\n                <div class=\"form-group\">\r\n                \r\n                    <input  [ngClass]=\"{'is-invalid': registerForm.get('ConfirmPassword').errors && registerForm.get('ConfirmPassword').touched ||registerForm.get('ConfirmPassword').touched && registerForm.hasError('mismatch')}\"  placeholder=\"Confirm Password\" formControlName=\"ConfirmPassword\"  type=\"text\" class=\"form-control\"/>\r\n                    <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('ConfirmPassword').hasError('required') && registerForm.get('ConfirmPassword').touched \">Please fill in the blanks</div>\r\n                    <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('ConfirmPassword').hasError('mismatch') && registerForm.get('ConfirmPassword').touched \">Password must match</div>\r\n\r\n                  </div>\r\n                <input value=\"Register\" [disabled]=\"!registerForm.valid\" type=\"submit\" class=\"btn btn0\"/>\r\n             </form>\r\n           </div>\r\n           <div class=\"col-md-6 login-right\">\r\n              <h3>REGISTERED CUSTOMERS</h3>\r\n            <p>If you have an account with us, please log in.</p>\r\n\r\n            <!--that ng Form here has no meaning, just to refrence to the form-->\r\n            <form (submit)=\"login()\"> \r\n              <div class=\"form-group\">\r\n                  <label for=\"userName\">Email</label>\r\n                  <input name=\"UserName\" [(ngModel)]=\"model.UserName\" placeholder=\"Email\" id=\"userName\" type=\"text\" class=\"form-control\"/>\r\n              </div>\r\n              <div class=\"form-group\">\r\n                  <label for=\"password\">Password</label>\r\n                  <input [(ngModel)]=\"model.Password\" name=\"Password\" placeholder=\"Password\" id=\"password\" type=\"text\" class=\"form-control\"/>\r\n              </div>\r\n            <input value=\"LOGIN\" type=\"submit\" class=\"btn btn0\"/>\r\n              </form>\r\n           </div>\r\n           <div class=\"clearfix\"> </div>\r\n         </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"footer\">\r\n      <div class=\"container\">\r\n        <div class=\"cssmenu\">\r\n          <ul>\r\n          <li class=\"active\"><a href=\"#\">Home</a></li> \r\n          <li><a href=\"about.html\">About</a></li>\r\n          <li><a href=\"profiles.html\">Add Profile</a></li>\r\n          <li><a href=\"contact.html\">Contact</a></li>\r\n          </ul>\r\n          </div>\r\n          <div class=\"copy\">\r\n          <p>&copy; 2014 Template by <a href=\"http://w3layouts.com\" target=\"_blank\">w3layouts</a></p>\r\n        </div>\r\n        <div class=\"social\"> \r\n          <ul class=\"footer_social\">\r\n            <li><a href=\"#\"> <i class=\"fb\"> </i> </a></li>\r\n            <li><a href=\"#\"> <i class=\"tw\"> </i> </a></li>\r\n           </ul>\r\n        </div>\r\n          <div class='clearfix'> </div>\r\n      </div>\r\n    </div>\r\n    </body>\r\n\r\n\r\n\r\n    {{registerForm.value|json}}\r\n    {{registerForm.status|json}}"
+module.exports = "<!---->\r\n\r\n\r\n\r\n\r\n<body>\r\n    \r\n    <div class=\"profile_banner\">\r\n      <div class=\"container\"> \r\n         <h3>Login</h3>\r\n      </div>\r\n    </div>\r\n    <div class='profiles'>\r\n      <div class=\"container\">\r\n        <div class=\"account_grid row\">\r\n           <div class=\"col-md-6 login-left\">\r\n               <h3>NEW CUSTOMERS</h3>\r\n             <p class='myfont'>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>\r\n \r\n             \r\n             <form [formGroup]=\"registerForm\" (submit)=\"register()\">\r\n\r\n                <div class=\"form-group\">\r\n                    <label class=\"control-label\" style=\"margin-right:10px\">I am a: </label>\r\n                    <label class=\"radio-inline\">\r\n                      <input class=\"mr-3\" type=\"radio\" value=\"male\" formControlName=\"Gender\">Male\r\n                    </label>\r\n                    <label class=\"radio-inline ml-3\">\r\n                      <input class=\"mr-3\" type=\"radio\" value=\"female\" formControlName=\"Gender\">Female\r\n                    </label>\r\n                  </div>\r\n                <div class=\"form-group\">\r\n                      <!--has to be same name as the one on the component-->\r\n                    <input formControlName=\"UserName\" placeholder=\"UserName\"  type=\"text\" [ngClass]=\"{'is-invalid': registerForm.get('UserName').errors && registerForm.get('UserName').touched }\" class=\"form-control \"/>\r\n               <div class=\"invalid-feedback\">Please choose a UserName</div>\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                      <input [ngClass]=\"{'is-invalid': registerForm.get('KnownAs').errors && registerForm.get('KnownAs').touched}\" class=\"form-control\"\r\n                        placeholder=\"Known As\" formControlName=\"KnownAs\">\r\n                      <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('KnownAs').touched && registerForm.get('KnownAs').hasError('required')\">Known as is required</div>\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <input [ngClass]=\"{'is-invalid': registerForm.get('City').errors && registerForm.get('City').touched}\" class=\"form-control\"\r\n                          placeholder=\"City\" formControlName=\"City\">\r\n                        <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('City').touched && registerForm.get('City').hasError('required')\">City is required</div>\r\n                      </div>\r\n                      <div class=\"form-group\">\r\n                          <input [ngClass]=\"{'is-invalid': registerForm.get('DateOfBirth').errors && registerForm.get('DateOfBirth').touched}\" class=\"form-control\"\r\n                            placeholder=\"Date of Birth\" formControlName=\"DateOfBirth\" type=\"date\">\r\n                          <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('DateOfBirth').touched && registerForm.get('DateOfBirth').hasError('required')\">Date of Birth is required</div>\r\n                        </div>\r\n                      <div class=\"form-group\">\r\n                        <input [ngClass]=\"{'is-invalid': registerForm.get('Country').errors && registerForm.get('Country').touched}\" class=\"form-control\"\r\n                          placeholder=\"Country\" formControlName=\"Country\">\r\n                        <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('Country').touched && registerForm.get('Country').hasError('required')\">Country is required</div>\r\n                      </div>\r\n                    \r\n                <div class=\"form-group\">\r\n                  <label class=\"control-label\" style=\"margin-right:10px\">I am Looking For: </label>\r\n                  <label class=\"radio-inline\">\r\n                    <input class=\"mr-3\" type=\"radio\" value=\"female\" formControlName=\"LookingFor\">Female\r\n                  </label>\r\n                  <label class=\"radio-inline ml-3\">\r\n                    <input class=\"mr-3\" type=\"radio\" value=\"male\" formControlName=\"LookingFor\">male\r\n                  </label>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                   \r\n                    <input type=\"password\" [ngClass]=\"{'is-invalid': registerForm.get('Password').errors && registerForm.get('Password').touched }\" placeholder=\"Password\" formControlName=\"Password\"   class=\"form-control\"/>\r\n                     <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('Password').hasError('required') && registerForm.get('Password').touched \">Please choose a Password</div>\r\n\r\n                     <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('Password').hasError('minlength') && registerForm.get('Password').touched \">Please require at least 4 characters</div>\r\n\r\n                  </div>\r\n                <div class=\"form-group\">\r\n                \r\n                    <input type=\"password\" [ngClass]=\"{'is-invalid': registerForm.get('ConfirmPassword').errors && registerForm.get('ConfirmPassword').touched ||registerForm.get('ConfirmPassword').touched && registerForm.hasError('mismatch')}\"  placeholder=\"Confirm Password\" formControlName=\"ConfirmPassword\"   class=\"form-control\"/>\r\n                    <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('ConfirmPassword').hasError('required') && registerForm.get('ConfirmPassword').touched \">Please fill in the blanks</div>\r\n                    <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('ConfirmPassword').hasError('mismatch') && registerForm.get('ConfirmPassword').touched \">Password must match</div>\r\n\r\n                  </div>\r\n                <input value=\"Register\" [disabled]=\"!registerForm.valid\" type=\"submit\" class=\"btn btn0\"/>\r\n             </form>\r\n           </div>\r\n           <div class=\"col-md-6 login-right\">\r\n              <h3>REGISTERED CUSTOMERS</h3>\r\n            <p>If you have an account with us, please log in.</p>\r\n\r\n            <!--that ng Form here has no meaning, just to refrence to the form-->\r\n            <form (submit)=\"login()\"> \r\n              <div class=\"form-group\">\r\n                  <label for=\"userName\">Email</label>\r\n                  <input name=\"UserName\" [(ngModel)]=\"model.UserName\" placeholder=\"Email\" id=\"userName\" type=\"text\" class=\"form-control\"/>\r\n              </div>\r\n              <div class=\"form-group\">\r\n                  <label for=\"password\">Password</label>\r\n                  <input [(ngModel)]=\"model.Password\" name=\"Password\" placeholder=\"Password\" id=\"password\" type=\"text\" class=\"form-control\"/>\r\n              </div>\r\n            <input value=\"LOGIN\" type=\"submit\" class=\"btn btn0\"/>\r\n              </form>\r\n           </div>\r\n           <div class=\"clearfix\"> </div>\r\n         </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"footer\">\r\n      <div class=\"container\">\r\n        <div class=\"cssmenu\">\r\n          <ul>\r\n          <li class=\"active\"><a href=\"#\">Home</a></li> \r\n          <li><a href=\"about.html\">About</a></li>\r\n          <li><a href=\"profiles.html\">Add Profile</a></li>\r\n          <li><a href=\"contact.html\">Contact</a></li>\r\n          </ul>\r\n          </div>\r\n          <div class=\"copy\">\r\n          <p>&copy; 2014 Template by <a href=\"http://w3layouts.com\" target=\"_blank\">w3layouts</a></p>\r\n        </div>\r\n        <div class=\"social\"> \r\n          <ul class=\"footer_social\">\r\n            <li><a href=\"#\"> <i class=\"fb\"> </i> </a></li>\r\n            <li><a href=\"#\"> <i class=\"tw\"> </i> </a></li>\r\n           </ul>\r\n        </div>\r\n          <div class='clearfix'> </div>\r\n      </div>\r\n    </div>\r\n    </body>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -2334,7 +2329,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Automata\Documents\GitHub\AngularNetCoreDatingApp\DatingApp-SPA\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\Automata\Documents\GitHub\.NetAngularDatingApp\DatingApp-SPA\src\main.ts */"./src/main.ts");
 
 
 /***/ })

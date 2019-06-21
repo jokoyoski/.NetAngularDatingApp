@@ -23,15 +23,15 @@ photoUrl: string;
 
   ) {
     this.authService.currentPhotoUrl.subscribe((photoUrl) => {
-      console.log(photoUrl);
+    
       this.photoUrl = photoUrl;
 
     });
     this.route.data.subscribe(data => {
       this.user = data.user;
+console.log(this.user);
 
-
-   // console.log(this.user.gendero);
+   
 
     });
   }
@@ -45,5 +45,7 @@ photoUrl: string;
   }
   updateMainPhoto(photoUrl) {
     this.user.photoUrl = photoUrl;
+     
+
   }
 }

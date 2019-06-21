@@ -31,7 +31,7 @@
                   </div>
                 <div class="form-group">
                       <!--has to be same name as the one on the component-->
-                    <input formControlName="Email" placeholder="UserName"  type="text" [ngClass]="{'is-invalid': registerForm.get('UserName').errors && registerForm.get('UserName').touched }" class="form-control "/>
+                    <input formControlName="UserName" placeholder="UserName"  type="text" [ngClass]="{'is-invalid': registerForm.get('UserName').errors && registerForm.get('UserName').touched }" class="form-control "/>
                <div class="invalid-feedback">Please choose a UserName</div>
                   </div>
                   <div class="form-group">
@@ -58,7 +58,7 @@
                 <div class="form-group">
                   <label class="control-label" style="margin-right:10px">I am Looking For: </label>
                   <label class="radio-inline">
-                    <input class="mr-3" type="radio" value="female" formControlName="LookingFor">FeMale
+                    <input class="mr-3" type="radio" value="female" formControlName="LookingFor">Female
                   </label>
                   <label class="radio-inline ml-3">
                     <input class="mr-3" type="radio" value="male" formControlName="LookingFor">male
@@ -66,7 +66,7 @@
                 </div>
                 <div class="form-group">
                    
-                    <input [ngClass]="{'is-invalid': registerForm.get('Password').errors && registerForm.get('Password').touched }" placeholder="Password" formControlName="Password"  type="text" class="form-control"/>
+                    <input type="password" [ngClass]="{'is-invalid': registerForm.get('Password').errors && registerForm.get('Password').touched }" placeholder="Password" formControlName="Password"   class="form-control"/>
                      <div class="invalid-feedback" *ngIf="registerForm.get('Password').hasError('required') && registerForm.get('Password').touched ">Please choose a Password</div>
 
                      <div class="invalid-feedback" *ngIf="registerForm.get('Password').hasError('minlength') && registerForm.get('Password').touched ">Please require at least 4 characters</div>
@@ -74,7 +74,7 @@
                   </div>
                 <div class="form-group">
                 
-                    <input  [ngClass]="{'is-invalid': registerForm.get('ConfirmPassword').errors && registerForm.get('ConfirmPassword').touched ||registerForm.get('ConfirmPassword').touched && registerForm.hasError('mismatch')}"  placeholder="Confirm Password" formControlName="ConfirmPassword"  type="text" class="form-control"/>
+                    <input type="password" [ngClass]="{'is-invalid': registerForm.get('ConfirmPassword').errors && registerForm.get('ConfirmPassword').touched ||registerForm.get('ConfirmPassword').touched && registerForm.hasError('mismatch')}"  placeholder="Confirm Password" formControlName="ConfirmPassword"   class="form-control"/>
                     <div class="invalid-feedback" *ngIf="registerForm.get('ConfirmPassword').hasError('required') && registerForm.get('ConfirmPassword').touched ">Please fill in the blanks</div>
                     <div class="invalid-feedback" *ngIf="registerForm.get('ConfirmPassword').hasError('mismatch') && registerForm.get('ConfirmPassword').touched ">Password must match</div>
 
@@ -128,6 +128,3 @@
     </body>
 
 
-
-    {{registerForm.value|json}}
-    {{registerForm.status|json}}

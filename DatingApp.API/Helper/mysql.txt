@@ -65,3 +65,17 @@ mysql> show tables;
 6 rows in set (0.07 sec)
 
 mysql>
+
+
+
+
+
+install MySQL
+
+
+
+
+
+cd /etc/apache2
+
+apache2ctl configtest

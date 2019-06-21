@@ -926,16 +926,16 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\AngularNetCoreDatingApp\datingapp-spa\node_modules\bootstrap\dist\css\bootstrap.min.css */"./node_modules/bootstrap/dist/css/bootstrap.min.css");
-__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\AngularNetCoreDatingApp\datingapp-spa\node_modules\ngx-bootstrap\datepicker\bs-datepicker.css */"./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css");
-__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\AngularNetCoreDatingApp\datingapp-spa\src\styles.css */"./src/styles.css");
-__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\AngularNetCoreDatingApp\datingapp-spa\node_modules\alertifyjs\build\css\alertify.min.css */"./node_modules/alertifyjs/build/css/alertify.min.css");
-__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\AngularNetCoreDatingApp\datingapp-spa\node_modules\alertifyjs\build\css\themes\bootstrap.min.css */"./node_modules/alertifyjs/build/css/themes/bootstrap.min.css");
-__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\AngularNetCoreDatingApp\datingapp-spa\node_modules\font-awesome\css\font-awesome.min.css */"./node_modules/font-awesome/css/font-awesome.min.css");
-__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\AngularNetCoreDatingApp\datingapp-spa\src\bootstrap.min.css */"./src/bootstrap.min.css");
-__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\AngularNetCoreDatingApp\datingapp-spa\src\assets\web\css\style.css */"./src/assets/web/css/style.css");
-__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\AngularNetCoreDatingApp\datingapp-spa\src\assets\web\css\flexslider.css */"./src/assets/web/css/flexslider.css");
-module.exports = __webpack_require__(/*! C:\Users\Automata\Documents\GitHub\AngularNetCoreDatingApp\datingapp-spa\src\assets\web\css\animate.css */"./src/assets/web/css/animate.css");
+__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\.NetAngularDatingApp\DatingApp-SPA\node_modules\bootstrap\dist\css\bootstrap.min.css */"./node_modules/bootstrap/dist/css/bootstrap.min.css");
+__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\.NetAngularDatingApp\DatingApp-SPA\node_modules\ngx-bootstrap\datepicker\bs-datepicker.css */"./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css");
+__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\.NetAngularDatingApp\DatingApp-SPA\src\styles.css */"./src/styles.css");
+__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\.NetAngularDatingApp\DatingApp-SPA\node_modules\alertifyjs\build\css\alertify.min.css */"./node_modules/alertifyjs/build/css/alertify.min.css");
+__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\.NetAngularDatingApp\DatingApp-SPA\node_modules\alertifyjs\build\css\themes\bootstrap.min.css */"./node_modules/alertifyjs/build/css/themes/bootstrap.min.css");
+__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\.NetAngularDatingApp\DatingApp-SPA\node_modules\font-awesome\css\font-awesome.min.css */"./node_modules/font-awesome/css/font-awesome.min.css");
+__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\.NetAngularDatingApp\DatingApp-SPA\src\bootstrap.min.css */"./src/bootstrap.min.css");
+__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\.NetAngularDatingApp\DatingApp-SPA\src\assets\web\css\style.css */"./src/assets/web/css/style.css");
+__webpack_require__(/*! C:\Users\Automata\Documents\GitHub\.NetAngularDatingApp\DatingApp-SPA\src\assets\web\css\flexslider.css */"./src/assets/web/css/flexslider.css");
+module.exports = __webpack_require__(/*! C:\Users\Automata\Documents\GitHub\.NetAngularDatingApp\DatingApp-SPA\src\assets\web\css\animate.css */"./src/assets/web/css/animate.css");
 
 
 /***/ })

@@ -241,9 +241,24 @@ Id= Photo.Id;
                 
                  
             var userData= this.dataContext.Photos.SingleOrDefault(x=>x.UserId==userId && x.IsMain==true);
-userData.IsMain=false;
+             
+            if(userData==null)
+            {
+                 var userDatas= this.dataContext.Photos.Where(x=>x.UserId==userId);
+
+                  foreach(var j in userDatas)
+                  {
+                      if(j.Id==PhotoId)
+                      {
+                          j.IsMain=true;
+                      }
+                  }
+            }else{
+  userData.IsMain=false;
  var updateMain=this.dataContext.Photos.SingleOrDefault(x=>x.Id==PhotoId);
  updateMain.IsMain=true;
+            }
+
              this.dataContext.SaveChanges();
             }
             catch (Exception e)
