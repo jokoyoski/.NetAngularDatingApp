@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace DatingApp.API.Model
 {
-    public class User
+    public class User:IdentityUser<int>
     {
         
-        public int id {get;set;}
+      
 
-        public string UserName {get;set;}
+      
 
         public string Gender {get;set;}
 
@@ -17,7 +18,7 @@ namespace DatingApp.API.Model
 
         public string KnownAs {get;set;}
 
-   public byte[] PasswordHash {get;set;}
+  
   public string Password {get;set;}
    public byte[] PasswordSalt {get;set;}
         public DateTime LastActive {get;set;}
@@ -38,7 +39,8 @@ namespace DatingApp.API.Model
         public string City {get;set;}
 
         public string Country {get;set;}
-
+        
+        public ICollection<UserRole> userRoles{get;set;}
 
         
    

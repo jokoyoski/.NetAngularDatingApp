@@ -11,7 +11,7 @@ namespace DatingApp.API.Interface
 
             var view=new UserView{
               LookingFor=user.LookingFor,
-              id=user.id,
+              id=user.Id,
               UserName=user.UserName,
               Interests=user.Interests,
               Introduction=user.Introduction,

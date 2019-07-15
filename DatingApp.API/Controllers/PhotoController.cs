@@ -154,7 +154,7 @@ var deleteParams=new DeletionParams(photo.PublicId);
       }
 
     
-    return Ok(new{status="Photo deleted successfully"});
+    return Ok(new{status="Photo deleted successfully, reload the page please"});
 
 }
     }

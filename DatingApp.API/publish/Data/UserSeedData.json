@@ -1,6 +1,7 @@
 [
     {
-      "Username": "Belinda",
+      "UserName": "Belinda@",
+      "Email":"jokoyoski@gmail.com",
       "Gender": "female",
       "DateOfBirth": "1979-11-06",
       "Password": "password",
@@ -11,14 +12,8 @@
       "LookingFor": "Laboris duis dolor eu veniam commodo. Eiusmod ut excepteur exercitation quis. Ipsum dolore labore cillum do voluptate culpa veniam amet do cillum quis exercitation culpa aliquip. Occaecat adipisicing consequat eu labore. Velit incididunt exercitation incididunt dolore minim proident dolore esse et dolore ut commodo aliqua. Ullamco cupidatat aliqua mollit quis ut cupidatat pariatur reprehenderit et proident esse cupidatat.\r\n",
       "Interests": "Aliqua duis ipsum ipsum id proident laborum Lorem sit ipsum magna veniam.",
       "City": "Berlin",
-      "Country": "Cyprus",
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/women/38.jpg",
-          "isMain": true,
-          "description": "Adipisicing tempor labore officia commodo est nostrud sit nostrud Lorem ea tempor velit aute occaecat."
-        }
-      ]
+      "Country": "Cyprus"
+     
     },
     {
       "Username": "Jenifer",
@@ -32,14 +27,8 @@
       "LookingFor": "Id aute fugiat consequat ea. Nostrud consequat deserunt dolor proident cillum fugiat. Ex laboris cupidatat id magna ullamco labore anim est. Adipisicing aliquip voluptate anim esse sunt minim qui cupidatat amet labore. Ea voluptate laboris mollit id ipsum magna amet ad sit velit in dolore. Occaecat enim Lorem consequat laborum dolor enim veniam nisi amet incididunt aute. In adipisicing adipisicing in do veniam aliqua Lorem aute aliquip nisi deserunt consectetur est.\r\n",
       "Interests": "Ut ad ea ex est veniam do exercitation eiusmod sint occaecat est.",
       "City": "Longoria",
-      "Country": "Sri Lanka",
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/women/88.jpg",
-          "isMain": true,
-          "description": "Nisi est ea velit excepteur anim nisi sunt minim consequat sunt do irure."
-        }
-      ]
+      "Country": "Sri Lanka"
+     
     },
     {
       "Username": "Mara",
@@ -53,14 +42,8 @@
       "LookingFor": "Et et ut tempor velit amet elit ut anim commodo. Esse deserunt dolore quis duis culpa eu pariatur magna non qui esse tempor. Velit eiusmod eu ad aute eu laborum. Exercitation consectetur ex officia mollit deserunt culpa labore ad culpa officia incididunt.\r\n",
       "Interests": "Adipisicing incididunt veniam occaecat aliquip occaecat commodo ea velit officia culpa labore eu culpa esse.",
       "City": "Oceola",
-      "Country": "Chad",
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/women/1.jpg",
-          "isMain": true,
-          "description": "Dolore eu dolor elit ad eu in officia tempor magna nulla do."
-        }
-      ]
+      "Country": "Chad"
+     
     },
     {
       "Username": "Magdalena",
@@ -74,14 +57,8 @@
       "LookingFor": "Eu consectetur aliquip nulla sint cupidatat. Aliqua Lorem tempor culpa laboris dolore dolore est irure ad. Officia veniam duis laborum elit culpa ea elit occaecat ad enim anim. Elit anim mollit ad irure aliqua elit eu. Labore adipisicing non do aliquip. Culpa mollit cillum fugiat et. In cupidatat sunt dolor cillum adipisicing culpa consectetur officia commodo minim esse commodo mollit aliquip.\r\n",
       "Interests": "Enim nulla in mollit ullamco labore nulla irure enim.",
       "City": "Deseret",
-      "Country": "Nicaragua",
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/women/87.jpg",
-          "isMain": true,
-          "description": "Cupidatat laboris laboris eu ullamco voluptate sint non nostrud."
-        }
-      ]
+      "Country": "Nicaragua"
+    
     },
     {
       "Username": "Muriel",
@@ -95,14 +72,8 @@
       "LookingFor": "Labore esse in Lorem incididunt est adipisicing enim non ad deserunt. Pariatur laboris exercitation elit ullamco veniam mollit ipsum sit anim. In officia labore ex voluptate do eiusmod nisi. Lorem dolor labore consectetur excepteur laboris consequat proident voluptate laborum excepteur magna adipisicing.\r\n",
       "Interests": "Tempor do voluptate velit tempor sint veniam cupidatat tempor irure pariatur magna.",
       "City": "Canby",
-      "Country": "Taiwan",
-      "Photos": [
-        {
-          "url": "https://randomuser.me/api/portraits/women/56.jpg",
-          "isMain": true,
-          "description": "Elit commodo adipisicing velit esse laboris cillum occaecat aute."
-        }
-      ]
+      "Country": "Taiwan"
+     
     },
     
         {
@@ -117,14 +88,8 @@
           "LookingFor": "Irure laborum dolore fugiat consequat pariatur do. Excepteur duis ipsum minim sint exercitation sint fugiat duis minim veniam duis. Nisi mollit adipisicing esse id enim ullamco ex ut cillum anim laborum commodo. Adipisicing occaecat tempor in elit tempor nisi ad est officia reprehenderit adipisicing et.\r\n",
           "Interests": "Dolore dolor duis adipisicing excepteur enim pariatur reprehenderit esse dolor cupidatat dolor aliqua laborum.",
           "City": "Yonah",
-          "Country": "Antigua and Barbuda",
-          "Photos": [
-            {
-              "url": "https://randomuser.me/api/portraits/men/55.jpg",
-              "isMain": true,
-              "description": "Sunt incididunt reprehenderit ex consequat ex laborum pariatur ut dolore enim elit aute veniam."
-            }
-          ]
+          "Country": "Antigua and Barbuda"
+         
         },
         {
           "Username": "Rivas",
@@ -138,14 +103,8 @@
           "LookingFor": "Velit reprehenderit aliqua cupidatat aliqua nisi pariatur culpa ex nulla culpa nisi consequat ut qui. Aliquip cillum incididunt sit nulla officia. Cupidatat esse ea anim deserunt. Minim aute exercitation consectetur pariatur in pariatur fugiat qui officia in excepteur nulla. Nulla et magna deserunt do non sint veniam et. Aute minim id excepteur velit sit enim fugiat incididunt ad sit dolor. Consequat duis esse labore culpa.\r\n",
           "Interests": "Duis officia ut elit sit nulla dolore cillum dolor aute ea mollit.",
           "City": "Gloucester",
-          "Country": "Denmark",
-          "Photos": [
-            {
-              "url": "https://randomuser.me/api/portraits/men/60.jpg",
-              "isMain": true,
-              "description": "Consectetur est cupidatat officia sint aliquip."
-            }
-          ]
+          "Country": "Denmark"
+         
         },
         {
           "Username": "Wilson",
@@ -159,14 +118,8 @@
           "LookingFor": "Ut duis occaecat elit Lorem dolore ullamco et do. Dolore ad duis est est cupidatat. Cupidatat excepteur aute aliqua ullamco amet fugiat tempor quis. Tempor ex ipsum adipisicing deserunt id anim eu. Enim incididunt minim qui nulla aute dolore exercitation elit ipsum ut elit exercitation. Aute sunt quis irure cillum et in nulla laborum ullamco ullamco culpa veniam ipsum. Ullamco aliqua enim non esse ex laborum veniam occaecat.\r\n",
           "Interests": "Irure aute et commodo eiusmod nulla sint.",
           "City": "Frierson",
-          "Country": "Sweden",
-          "Photos": [
-            {
-              "url": "https://randomuser.me/api/portraits/men/85.jpg",
-              "isMain": true,
-              "description": "Do labore amet deserunt consectetur et commodo anim nisi incididunt commodo aliquip minim voluptate."
-            }
-          ]
+          "Country": "Sweden"
+         
         },
         {
           "Username": "Davis",
@@ -180,14 +133,8 @@
           "LookingFor": "Consequat ex enim cupidatat do occaecat dolor eu. Sit commodo reprehenderit nostrud duis qui ipsum esse officia cupidatat duis et sint ea. Commodo officia exercitation labore qui mollit. Veniam esse nulla in ad ad duis quis laboris. Nisi et ullamco ipsum fugiat sit consectetur tempor commodo eu officia officia deserunt dolor aliquip. Anim nisi commodo id magna id incididunt laboris velit mollit ad ad. Laboris cillum ea aliquip irure.\r\n",
           "Interests": "Dolor reprehenderit pariatur veniam nostrud consectetur.",
           "City": "Wakulla",
-          "Country": "Philippines",
-          "Photos": [
-            {
-              "url": "https://randomuser.me/api/portraits/men/73.jpg",
-              "isMain": true,
-              "description": "Tempor veniam Lorem et nostrud ipsum anim eiusmod eu do."
-            }
-          ]
+          "Country": "Philippines"
+        
         },
         {
           "Username": "Dejesus",
@@ -201,14 +148,8 @@
           "LookingFor": "Ex mollit anim enim adipisicing ipsum magna ex consectetur eu quis enim magna adipisicing dolor. Sunt irure eiusmod incididunt est mollit qui anim officia non laboris elit reprehenderit ex. Labore in aliquip tempor amet nulla nulla ipsum esse consectetur elit in consequat. Dolore eu qui deserunt sunt voluptate laborum labore duis pariatur aliquip nisi ex elit laborum.\r\n",
           "Interests": "Cupidatat eiusmod aliqua amet fugiat Lorem cillum.",
           "City": "Riceville",
-          "Country": "Cote D'Ivoire (Ivory Coast)",
-          "Photos": [
-            {
-              "url": "https://randomuser.me/api/portraits/men/25.jpg",
-              "isMain": true,
-              "description": "Eu anim ullamco esse incididunt quis commodo magna ad."
-            }
-          ]
+          "Country": "Cote D'Ivoire (Ivory Coast)"
+         
         }
       
   ]

@@ -40,6 +40,62 @@ var User = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./directives/role.directive.ts":
+/*!**************************************!*\
+  !*** ./directives/role.directive.ts ***!
+  \**************************************/
+/*! exports provided: RoleDirective */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RoleDirective", function() { return RoleDirective; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_Services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/Services/auth.service */ "./src/app/Services/auth.service.ts");
+
+
+
+var RoleDirective = /** @class */ (function () {
+    function RoleDirective(viewContaierRef, templateRef, authService) {
+        this.viewContaierRef = viewContaierRef;
+        this.templateRef = templateRef;
+        this.authService = authService;
+        this.isVisible = false;
+    }
+    RoleDirective.prototype.ngInit = function () {
+        var userRoles = this.authService.decodedToken.role;
+        if (!userRoles) {
+            this.viewContaierRef.clear();
+        }
+        if (this.authService.roleMatch(this.appRole)) {
+            if (!this.isVisible) {
+                this.isVisible = true;
+                this.viewContaierRef.createEmbeddedView(this.templateRef);
+            }
+            else {
+                this.isVisible = false;
+                this.viewContaierRef.clear();
+            }
+        }
+    };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Array)
+    ], RoleDirective.prototype, "appRole", void 0);
+    RoleDirective = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"])({
+            selector: '[appRole]'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewContainerRef"], _angular_core__WEBPACK_IMPORTED_MODULE_1__["TemplateRef"], src_app_Services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"]])
+    ], RoleDirective);
+    return RoleDirective;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/$$_lazy_route_resource lazy recursive":
 /*!**********************************************************!*\
   !*** ./src/$$_lazy_route_resource lazy namespace object ***!
@@ -434,6 +490,46 @@ var MessagesComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Services/admin.service.ts":
+/*!*******************************************!*\
+  !*** ./src/app/Services/admin.service.ts ***!
+  \*******************************************/
+/*! exports provided: AdminService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminService", function() { return AdminService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment.prod */ "./src/environments/environment.prod.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+
+
+
+
+var AdminService = /** @class */ (function () {
+    function AdminService(httpClient) {
+        this.httpClient = httpClient;
+        this.baseUrl = src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_2__["environment"].api;
+    }
+    AdminService.prototype.getUserRoles = function () {
+        console.log('err');
+        return this.httpClient.get(this.baseUrl + 'admin/GetUsersRole');
+    };
+    AdminService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]])
+    ], AdminService);
+    return AdminService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/Services/alertify.service.ts":
 /*!**********************************************!*\
   !*** ./src/app/Services/alertify.service.ts ***!
@@ -495,8 +591,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/index.js");
+/* harmony import */ var src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/environments/environment.prod */ "./src/environments/environment.prod.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/index.js");
+
 
 
 
@@ -507,10 +605,10 @@ var AuthService = /** @class */ (function () {
     function AuthService(http) {
         this.http = http;
         this.pic = '../../assets/web/images/user.png';
-        this.photoUrl = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"]('../../assets/web/images/user.png');
+        this.photoUrl = new rxjs__WEBPACK_IMPORTED_MODULE_5__["BehaviorSubject"]('../../assets/web/images/user.png');
         this.currentPhotoUrl = this.photoUrl.asObservable();
-        this.jwtHelper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_5__["JwtHelperService"]();
-        this.mainUrl = 'http://jokoyoski200-001-site1.itempurl.com/api/';
+        this.jwtHelper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_6__["JwtHelperService"]();
+        this.mainUrl = src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_4__["environment"].api;
         this.registerURL = 'http://localhost:5000/api/';
     }
     AuthService.prototype.canMemberChangePhoto = function (photoUrl) {
@@ -518,7 +616,8 @@ var AuthService = /** @class */ (function () {
     };
     AuthService.prototype.login = function (model) {
         var _this = this;
-        return this.http.post('http://jokoyoski200-001-site1.itempurl.com/api/auth/Login', model)
+        console.log(this.mainUrl);
+        return this.http.post('http://jokoyoski200-001-site1.itempurl.com/api/auth/login', model)
             .pipe(// the post is an observable so we always need to pipe an observable
         Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
             _this.result = response;
@@ -540,6 +639,7 @@ var AuthService = /** @class */ (function () {
                     localStorage.setItem('picUrl', _this.pic);
                 }
             }
+            console.log(localStorage.getItem('token'));
         }));
     };
     AuthService.prototype.Upload = function (file) {
@@ -569,6 +669,16 @@ var AuthService = /** @class */ (function () {
         var tokenId = localStorage.getItem('userId');
         var url = this.mainUrl + 'photos/' + photoId + '/' + tokenId + '/deletePhoto';
         return this.http.get(url);
+    };
+    AuthService.prototype.roleMatch = function (allowedRoles) {
+        var isMatch = false;
+        var userRoles = this.decodedToken.role;
+        allowedRoles.forEach(function (element) {
+            if (userRoles.includes(element)) {
+                isMatch = true;
+            }
+        });
+        return isMatch;
     };
     AuthService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -743,10 +853,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserService", function() { return UserService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var Model_pagination__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! Model/pagination */ "./Model/pagination.ts");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var Model_pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! Model/pagination */ "./Model/pagination.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/environments/environment.prod */ "./src/environments/environment.prod.ts");
 
 
 
@@ -756,12 +866,11 @@ __webpack_require__.r(__webpack_exports__);
 var UserService = /** @class */ (function () {
     function UserService(httpClient) {
         this.httpClient = httpClient;
-        this.baseURL = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].apiURL;
-        this.mainUrl = 'http://jokoyoski200-001-site1.itempurl.com/api/';
+        this.mainUrl = src_environments_environment_prod__WEBPACK_IMPORTED_MODULE_5__["environment"].api;
     }
     UserService.prototype.getUsers = function (page, itemsPerPage, userParams) {
-        var paginatedResult = new Model_pagination__WEBPACK_IMPORTED_MODULE_4__["PaginatedResult"]();
-        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"]();
+        var paginatedResult = new Model_pagination__WEBPACK_IMPORTED_MODULE_3__["PaginatedResult"]();
+        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]();
         if (page != null && itemsPerPage != null) {
             params = params.append('PageNumber', page);
             params = params.append('PageSize', itemsPerPage);
@@ -773,8 +882,7 @@ var UserService = /** @class */ (function () {
             params = params.append('orderBy', userParams.activity);
         }
         console.log(params);
-        console.log(this.baseURL);
-        return this.httpClient.get(this.mainUrl + 'users', { observe: 'response', params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (response) {
+        return this.httpClient.get(this.mainUrl + 'users', { observe: 'response', params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (response) {
             paginatedResult.result = response.body;
             if (response.headers.get('Pagination') != null) {
                 console.log(JSON.parse(response.headers.get('Pagination')));
@@ -782,11 +890,10 @@ var UserService = /** @class */ (function () {
             }
             return paginatedResult;
         }));
-        console.log(this.baseURL);
     };
     UserService.prototype.GetUserLikes = function (page, itemsPerPage, userParams) {
-        var paginatedResult = new Model_pagination__WEBPACK_IMPORTED_MODULE_4__["PaginatedResult"]();
-        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"]();
+        var paginatedResult = new Model_pagination__WEBPACK_IMPORTED_MODULE_3__["PaginatedResult"]();
+        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]();
         if (page != null && itemsPerPage != null) {
             params = params.append('PageNumber', page);
             params = params.append('PageSize', itemsPerPage);
@@ -796,7 +903,7 @@ var UserService = /** @class */ (function () {
             params = params.append('UserStatusLikes', userParams);
         }
         console.log(params);
-        return this.httpClient.get(this.mainUrl + 'users' + '/getuserlike', { observe: 'response', params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (response) {
+        return this.httpClient.get(this.mainUrl + 'users' + '/getuserlike', { observe: 'response', params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (response) {
             console.log(response);
             paginatedResult.result = response.body;
             if (response.headers.get('Pagination') != null) {
@@ -805,7 +912,6 @@ var UserService = /** @class */ (function () {
             }
             return paginatedResult;
         }));
-        console.log(this.baseURL);
     };
     // tslint:disable-next-line:ban-types
     UserService.prototype.UpdateUser = function (id, model) {
@@ -818,7 +924,8 @@ var UserService = /** @class */ (function () {
     };
     UserService.prototype.LikeUser = function (like) {
         console.log(like);
-        return this.httpClient.post(this.mainUrl + 'users/likeuser', like).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (response) {
+        // tslint:disable-next-line: ban-types
+        return this.httpClient.post(this.mainUrl + 'users/likeuser', like).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (response) {
             console.log(response);
             return response;
         }));
@@ -827,15 +934,15 @@ var UserService = /** @class */ (function () {
         return this.httpClient.get(this.mainUrl + 'message/GetMessageThread?userId=' + id + '&recipientId=' + recipientId);
     };
     UserService.prototype.getMessages = function (page, itemsPerPage, messageContainer) {
-        var paginatedResult = new Model_pagination__WEBPACK_IMPORTED_MODULE_4__["PaginatedResult"]();
-        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"]();
+        var paginatedResult = new Model_pagination__WEBPACK_IMPORTED_MODULE_3__["PaginatedResult"]();
+        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]();
         if (page != null && itemsPerPage != null) {
             params = params.append('PageNumber', page);
             params = params.append('PageSize', itemsPerPage);
         }
         params = params.append('MessageContainer', messageContainer);
         var id = localStorage.getItem('userId');
-        return this.httpClient.get(this.mainUrl + 'message/GetMessageForUser?userId=' + id, { observe: 'response', params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (response) {
+        return this.httpClient.get(this.mainUrl + 'message/GetMessageForUser?userId=' + id, { observe: 'response', params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (response) {
             paginatedResult.result = response.body;
             if (response.headers.get('Pagination') != null) {
                 console.log(JSON.parse(response.headers.get('Pagination')));
@@ -858,7 +965,7 @@ var UserService = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
             providedIn: 'root'
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], UserService);
     return UserService;
 }());
@@ -893,12 +1000,23 @@ var AuthGuard = /** @class */ (function () {
         this.router = router;
         this.alertify = alertify;
     }
-    AuthGuard.prototype.canActivate = function () {
-        if (this.authService.loggedIn()) //if the user is loggedIn
-         {
+    AuthGuard.prototype.canActivate = function (next) {
+        var roles = next.firstChild.data['roles'];
+        console.log(roles);
+        if (roles) {
+            var match = this.authService.roleMatch(roles);
+            if (match) {
+                return true;
+            }
+            else {
+                this.router.navigate(['members']);
+                this.alertify.error('You are not authorize');
+            }
+        }
+        if (this.authService.loggedIn()) {
             return true;
         }
-        this.alertify.warning("You shall not Pass !!!");
+        this.alertify.warning('You shall not Pass !!!');
         this.router.navigate(['/home']); // navigate to home
         return false;
     };
@@ -911,7 +1029,244 @@ var AuthGuard = /** @class */ (function () {
     return AuthGuard;
 }());
 
-//this is the guard that was created when user needs to login, it was created and imported through app.module.ts and was used in the routes;
+// this is the guard that was created when user needs to login, it was created and imported through app.module.ts and was used in the routes;
+
+
+/***/ }),
+
+/***/ "./src/app/admin/admin-panel/admin-panel.component.css":
+/*!*************************************************************!*\
+  !*** ./src/app/admin/admin-panel/admin-panel.component.css ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FkbWluL2FkbWluLXBhbmVsL2FkbWluLXBhbmVsLmNvbXBvbmVudC5jc3MifQ== */"
+
+/***/ }),
+
+/***/ "./src/app/admin/admin-panel/admin-panel.component.html":
+/*!**************************************************************!*\
+  !*** ./src/app/admin/admin-panel/admin-panel.component.html ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container mt-5\" >\n<h2>Admin Panel</h2>\n<div class=\"tab-panel\">\n<tabset clas=\"member-tabset\">\n<tab heading=\"User Managemnt\">\n<app-user-managment></app-user-managment>\n</tab>\n<tab  heading=\"Photo Managemnt\">\n<app-photo-managment></app-photo-managment>\n</tab>\n</tabset>\n</div>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/admin/admin-panel/admin-panel.component.ts":
+/*!************************************************************!*\
+  !*** ./src/app/admin/admin-panel/admin-panel.component.ts ***!
+  \************************************************************/
+/*! exports provided: AdminPanelComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminPanelComponent", function() { return AdminPanelComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var AdminPanelComponent = /** @class */ (function () {
+    function AdminPanelComponent() {
+    }
+    AdminPanelComponent.prototype.ngOnInit = function () {
+    };
+    AdminPanelComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-admin-panel',
+            template: __webpack_require__(/*! ./admin-panel.component.html */ "./src/app/admin/admin-panel/admin-panel.component.html"),
+            styles: [__webpack_require__(/*! ./admin-panel.component.css */ "./src/app/admin/admin-panel/admin-panel.component.css")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    ], AdminPanelComponent);
+    return AdminPanelComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/admin/photo-managment/photo-managment.component.css":
+/*!*********************************************************************!*\
+  !*** ./src/app/admin/photo-managment/photo-managment.component.css ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FkbWluL3Bob3RvLW1hbmFnbWVudC9waG90by1tYW5hZ21lbnQuY29tcG9uZW50LmNzcyJ9 */"
+
+/***/ }),
+
+/***/ "./src/app/admin/photo-managment/photo-managment.component.html":
+/*!**********************************************************************!*\
+  !*** ./src/app/admin/photo-managment/photo-managment.component.html ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  photo-managment works!\n</p>\n"
+
+/***/ }),
+
+/***/ "./src/app/admin/photo-managment/photo-managment.component.ts":
+/*!********************************************************************!*\
+  !*** ./src/app/admin/photo-managment/photo-managment.component.ts ***!
+  \********************************************************************/
+/*! exports provided: PhotoManagmentComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PhotoManagmentComponent", function() { return PhotoManagmentComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var PhotoManagmentComponent = /** @class */ (function () {
+    function PhotoManagmentComponent() {
+    }
+    PhotoManagmentComponent.prototype.ngOnInit = function () {
+    };
+    PhotoManagmentComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-photo-managment',
+            template: __webpack_require__(/*! ./photo-managment.component.html */ "./src/app/admin/photo-managment/photo-managment.component.html"),
+            styles: [__webpack_require__(/*! ./photo-managment.component.css */ "./src/app/admin/photo-managment/photo-managment.component.css")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    ], PhotoManagmentComponent);
+    return PhotoManagmentComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/admin/roles-modal/roles-modal.component.css":
+/*!*************************************************************!*\
+  !*** ./src/app/admin/roles-modal/roles-modal.component.css ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FkbWluL3JvbGVzLW1vZGFsL3JvbGVzLW1vZGFsLmNvbXBvbmVudC5jc3MifQ== */"
+
+/***/ }),
+
+/***/ "./src/app/admin/roles-modal/roles-modal.component.html":
+/*!**************************************************************!*\
+  !*** ./src/app/admin/roles-modal/roles-modal.component.html ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  roles-modal works!\n</p>\n"
+
+/***/ }),
+
+/***/ "./src/app/admin/roles-modal/roles-modal.component.ts":
+/*!************************************************************!*\
+  !*** ./src/app/admin/roles-modal/roles-modal.component.ts ***!
+  \************************************************************/
+/*! exports provided: RolesModalComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RolesModalComponent", function() { return RolesModalComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var RolesModalComponent = /** @class */ (function () {
+    function RolesModalComponent() {
+    }
+    RolesModalComponent.prototype.ngOnInit = function () {
+    };
+    RolesModalComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-roles-modal',
+            template: __webpack_require__(/*! ./roles-modal.component.html */ "./src/app/admin/roles-modal/roles-modal.component.html"),
+            styles: [__webpack_require__(/*! ./roles-modal.component.css */ "./src/app/admin/roles-modal/roles-modal.component.css")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    ], RolesModalComponent);
+    return RolesModalComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/admin/user-managment/user-managment.component.css":
+/*!*******************************************************************!*\
+  !*** ./src/app/admin/user-managment/user-managment.component.css ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FkbWluL3VzZXItbWFuYWdtZW50L3VzZXItbWFuYWdtZW50LmNvbXBvbmVudC5jc3MifQ== */"
+
+/***/ }),
+
+/***/ "./src/app/admin/user-managment/user-managment.component.html":
+/*!********************************************************************!*\
+  !*** ./src/app/admin/user-managment/user-managment.component.html ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\">\n<table class=\"table\">\n<tr>\n<th style=\" width: 10%\"> UserId\n\n</th>\n<th style=\" width: 10%\"> UserName\n\n</th>\n<th style=\" width: 10%\"> Roles\n\n</th>\n</tr>\n<tr *ngFor=\"let user of users\">\n<td>{{user.id}}</td>\n<td>{{user.userName}}</td>\n<td>{{user.roles}}</td>\n<td><button class=\"btn btn-danger\">Edit Roles</button></td>\n</tr>\n\n\n</table>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/admin/user-managment/user-managment.component.ts":
+/*!******************************************************************!*\
+  !*** ./src/app/admin/user-managment/user-managment.component.ts ***!
+  \******************************************************************/
+/*! exports provided: UserManagmentComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserManagmentComponent", function() { return UserManagmentComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_Services_admin_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/Services/admin.service */ "./src/app/Services/admin.service.ts");
+
+
+
+var UserManagmentComponent = /** @class */ (function () {
+    function UserManagmentComponent(adminService) {
+        this.adminService = adminService;
+    }
+    UserManagmentComponent.prototype.ngOnInit = function () {
+        this.getUsersWithRoles();
+    };
+    UserManagmentComponent.prototype.getUsersWithRoles = function () {
+        var _this = this;
+        this.adminService.getUserRoles().subscribe(function (users) {
+            console.log(users);
+            _this.users = users;
+        }, function (error) {
+            console.log(error);
+        });
+    };
+    UserManagmentComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-user-managment',
+            template: __webpack_require__(/*! ./user-managment.component.html */ "./src/app/admin/user-managment/user-managment.component.html"),
+            styles: [__webpack_require__(/*! ./user-managment.component.css */ "./src/app/admin/user-managment/user-managment.component.css")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_Services_admin_service__WEBPACK_IMPORTED_MODULE_2__["AdminService"]])
+    ], UserManagmentComponent);
+    return UserManagmentComponent;
+}());
+
 
 
 /***/ }),
@@ -934,7 +1289,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ngx-spinner></ngx-spinner>\r\n<app-nav></app-nav>\r\n <router-outlet></router-outlet>\r\n\r\n"
+module.exports = "\r\n<app-nav></app-nav>\r\n <router-outlet></router-outlet>\r\n\r\n"
 
 /***/ }),
 
@@ -1038,20 +1393,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _resolvers_member_list_resolver__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ../_resolvers/member-list.resolver */ "./src/_resolvers/member-list.resolver.ts");
 /* harmony import */ var _members_member_edit_member_edit_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./members/member-edit/member-edit.component */ "./src/app/members/member-edit/member-edit.component.ts");
 /* harmony import */ var _resolvers_member_edit_resolver__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ../_resolvers/member-edit.resolver */ "./src/_resolvers/member-edit.resolver.ts");
-/* harmony import */ var _photo_editor_photo_editor_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./photo-editor/photo-editor.component */ "./src/app/photo-editor/photo-editor.component.ts");
-/* harmony import */ var ng2_file_upload__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ng2-file-upload */ "./node_modules/ng2-file-upload/index.js");
-/* harmony import */ var ng2_file_upload__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(ng2_file_upload__WEBPACK_IMPORTED_MODULE_29__);
-/* harmony import */ var ngx_bootstrap__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ngx-bootstrap */ "./node_modules/ngx-bootstrap/esm5/ngx-bootstrap.js");
-/* harmony import */ var _Services_scriptsloader_service__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./Services/scriptsloader.service */ "./src/app/Services/scriptsloader.service.ts");
-/* harmony import */ var src_resolvers_lists_resolver__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! src/_resolvers/lists.resolver */ "./src/_resolvers/lists.resolver.ts");
-/* harmony import */ var src_resolvers_message_resolvers__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! src/_resolvers/message.resolvers */ "./src/_resolvers/message.resolvers.ts");
-/* harmony import */ var _members_member_messages_MemberMessages_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./members/member-messages/MemberMessages.component */ "./src/app/members/member-messages/MemberMessages.component.ts");
+/* harmony import */ var _admin_admin_panel_admin_panel_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./admin/admin-panel/admin-panel.component */ "./src/app/admin/admin-panel/admin-panel.component.ts");
+/* harmony import */ var _photo_editor_photo_editor_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./photo-editor/photo-editor.component */ "./src/app/photo-editor/photo-editor.component.ts");
+/* harmony import */ var ng2_file_upload__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ng2-file-upload */ "./node_modules/ng2-file-upload/index.js");
+/* harmony import */ var ng2_file_upload__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(ng2_file_upload__WEBPACK_IMPORTED_MODULE_30__);
+/* harmony import */ var ngx_bootstrap__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ngx-bootstrap */ "./node_modules/ngx-bootstrap/esm5/ngx-bootstrap.js");
+/* harmony import */ var _Services_scriptsloader_service__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./Services/scriptsloader.service */ "./src/app/Services/scriptsloader.service.ts");
+/* harmony import */ var src_resolvers_lists_resolver__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! src/_resolvers/lists.resolver */ "./src/_resolvers/lists.resolver.ts");
+/* harmony import */ var src_resolvers_message_resolvers__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! src/_resolvers/message.resolvers */ "./src/_resolvers/message.resolvers.ts");
+/* harmony import */ var _members_member_messages_MemberMessages_component__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./members/member-messages/MemberMessages.component */ "./src/app/members/member-messages/MemberMessages.component.ts");
+/* harmony import */ var directives_role_directive__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! directives/role.directive */ "./directives/role.directive.ts");
+/* harmony import */ var _admin_user_managment_user_managment_component__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./admin/user-managment/user-managment.component */ "./src/app/admin/user-managment/user-managment.component.ts");
+/* harmony import */ var _admin_photo_managment_photo_managment_component__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./admin/photo-managment/photo-managment.component */ "./src/app/admin/photo-managment/photo-managment.component.ts");
+/* harmony import */ var _admin_roles_modal_roles_modal_component__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./admin/roles-modal/roles-modal.component */ "./src/app/admin/roles-modal/roles-modal.component.ts");
 
 
 
 
 
 // tslint:disable-next-line: import-spacing
+
+
+
+
+
 
 
 
@@ -1094,6 +1459,7 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 _app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
                 _nav_nav_component__WEBPACK_IMPORTED_MODULE_7__["NavComponent"],
+                _admin_admin_panel_admin_panel_component__WEBPACK_IMPORTED_MODULE_28__["AdminPanelComponent"],
                 _home_home_component__WEBPACK_IMPORTED_MODULE_11__["HomeComponent"],
                 _register_register_component__WEBPACK_IMPORTED_MODULE_12__["RegisterComponent"],
                 _list_list_component__WEBPACK_IMPORTED_MODULE_14__["ListComponent"],
@@ -1101,20 +1467,24 @@ var AppModule = /** @class */ (function () {
                 _Messages_Messages_component__WEBPACK_IMPORTED_MODULE_16__["MessagesComponent"],
                 _members_member_card_member_card_component__WEBPACK_IMPORTED_MODULE_21__["MemberCardComponent"],
                 _members_member_edit_member_edit_component__WEBPACK_IMPORTED_MODULE_26__["MemberEditComponent"],
-                _members_member_messages_MemberMessages_component__WEBPACK_IMPORTED_MODULE_34__["MemberMessagesComponent"],
+                _members_member_messages_MemberMessages_component__WEBPACK_IMPORTED_MODULE_35__["MemberMessagesComponent"],
                 _members_member_detail_member_detail_component__WEBPACK_IMPORTED_MODULE_23__["MemberDetailComponent"],
-                _photo_editor_photo_editor_component__WEBPACK_IMPORTED_MODULE_28__["PhotoEditorComponent"],
-                time_ago_pipe__WEBPACK_IMPORTED_MODULE_5__["TimeAgoPipe"]
+                _photo_editor_photo_editor_component__WEBPACK_IMPORTED_MODULE_29__["PhotoEditorComponent"],
+                time_ago_pipe__WEBPACK_IMPORTED_MODULE_5__["TimeAgoPipe"],
+                directives_role_directive__WEBPACK_IMPORTED_MODULE_36__["RoleDirective"],
+                _admin_user_managment_user_managment_component__WEBPACK_IMPORTED_MODULE_37__["UserManagmentComponent"],
+                _admin_photo_managment_photo_managment_component__WEBPACK_IMPORTED_MODULE_38__["PhotoManagmentComponent"],
+                _admin_roles_modal_roles_modal_component__WEBPACK_IMPORTED_MODULE_39__["RolesModalComponent"]
             ],
             imports: [
-                ngx_bootstrap__WEBPACK_IMPORTED_MODULE_30__["PaginationModule"].forRoot(),
-                ngx_bootstrap__WEBPACK_IMPORTED_MODULE_30__["TabsModule"].forRoot(),
-                ngx_bootstrap__WEBPACK_IMPORTED_MODULE_30__["ButtonsModule"],
+                ngx_bootstrap__WEBPACK_IMPORTED_MODULE_31__["PaginationModule"].forRoot(),
+                ngx_bootstrap__WEBPACK_IMPORTED_MODULE_31__["TabsModule"].forRoot(),
+                ngx_bootstrap__WEBPACK_IMPORTED_MODULE_31__["ButtonsModule"],
                 ngx_spinner__WEBPACK_IMPORTED_MODULE_9__["NgxSpinnerModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ReactiveFormsModule"],
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
                 // tslint:disable-next-line: max-line-length
-                ng2_file_upload__WEBPACK_IMPORTED_MODULE_29__["FileUploadModule"],
+                ng2_file_upload__WEBPACK_IMPORTED_MODULE_30__["FileUploadModule"],
                 // after we wrote some code on the photo.editor.ts component
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpClientModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormsModule"],
@@ -1123,9 +1493,9 @@ var AppModule = /** @class */ (function () {
                 _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_22__["JwtModule"].forRoot({
                     config: {
                         tokenGetter: TokenGetter,
-                        // tslint:disable-next-line: max-line-length
-                        whitelistedDomains: ['localhost:5000'],
-                        blacklistedRoutes: ['localhost:5000/api/auth'] // we dont want to send token to this address
+                        // tslint:disable-next-line: max-line-length  //
+                        whitelistedDomains: ['jokoyoski200-001-site1.itempurl.com'],
+                        blacklistedRoutes: ['jokoyoski200-001-site1.itempurl.com/api/auth'] // we dont want to send token to this address
                     }
                 })
             ],
@@ -1136,11 +1506,11 @@ var AppModule = /** @class */ (function () {
                 // tslint:disable-next-line: max-line-length
                 // this is the guard that was created when user needs to login, it was created and imported through app.module.ts and was used in the routes;
                 _Services_user_service__WEBPACK_IMPORTED_MODULE_20__["UserService"],
-                _Services_scriptsloader_service__WEBPACK_IMPORTED_MODULE_31__["ScriptsloaderService"],
+                _Services_scriptsloader_service__WEBPACK_IMPORTED_MODULE_32__["ScriptsloaderService"],
                 _resolvers_member_list_resolver__WEBPACK_IMPORTED_MODULE_25__["MemberListResolver"],
                 _resolvers_member_edit_resolver__WEBPACK_IMPORTED_MODULE_27__["MemberEditResolver"],
-                src_resolvers_message_resolvers__WEBPACK_IMPORTED_MODULE_33__["MessageResolver"],
-                src_resolvers_lists_resolver__WEBPACK_IMPORTED_MODULE_32__["ListsResolver"],
+                src_resolvers_message_resolvers__WEBPACK_IMPORTED_MODULE_34__["MessageResolver"],
+                src_resolvers_lists_resolver__WEBPACK_IMPORTED_MODULE_33__["ListsResolver"],
                 src_resolvers_member_detail_resolver__WEBPACK_IMPORTED_MODULE_24__["MemberDetailResolver"] // we created a resolver class and we
                 // add the memeber resolver because here we want to be using it to catch null value .after
                 // we add it here we went to the routes we created and added resolver there
@@ -1176,7 +1546,7 @@ module.exports = "\r\n.color-button{\r\n    background-color: orangered;\r\n}\r\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<!DOCTYPE HTML>\r\n<html>\r\n<head>\r\n<title>Soulmate Bootstarp Website Template | Home :: w3layouts</title>\r\n\r\n<!-- Custom Theme files -->\r\n\r\n<!-- Custom Theme files -->\r\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n<!--webfont-->\r\n<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>\r\n\r\n\r\n\t\t\r\n</head>\r\n<body>\r\n\r\n\t\r\n\t\t\r\n\t\t\r\n<div class=\"banner wow bounceInRight\" data-wow-delay=\"0.4s\">\r\n\t<div class=\"container\"> \r\n\t   <div class=\"banner_right\">\r\n\t\t   <h2>Find a perfect date</h2>\r\n\t\t   <h1>Share your perfect moments </h1>\r\n\t\t   <ul class=\"button\">\r\n\r\n\t\t\t <li><a href=\"#\" [routerLink]=\"['/Register']\" class=\"btn1 btn2 btn-1 btn1-1b\">Get Started</a></li>\r\n\t\t\t <li><a href=\"#\" class=\"btn1 btn2 btn-1 btn1-1b\">Learn More</a></li>\r\n\t\t   </ul>\r\n\t   </div>\r\n\t</div>\r\n</div>\r\n<div class=\"content_top\">\r\n  <div class=\"container row\">\r\n\t<div class=\"col-md-6 grid_1\">\r\n\t  <h2>London Lovestory</h2>\r\n\t  <iframe width=\"\" height=\"\" src=\"//www.youtube.com/embed/6KkS2mQsmw8\" frameborder=\"0\" allowfullscreen></iframe>\r\n\t</div>\r\n\t<div class=\"col-md-6 wow fadeInRight\">\r\n\t\t\t<div class=\"banner-info\">\r\n\t\t\t\t\t<h3>Meet Jesica and Adam</h3>\r\n\t\t\t\t\t<h4><span class=\"m_2\">\"</span> my true love here<span class=\"m_2\"> \"</span></h4>\r\n\t\t\t\t\t<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent.</p>\t\r\n\t\t\t\t\t<h5><a href=\"#\">Adam Chamler ,</a>Dateratr since 2014</h5>\r\n\t\t\t </div>\r\n\t</div>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"content_middle wow fadeInUp\" data-wow-delay=\"0.4s\">\r\n\t<div class=\"container row\">\r\n\r\n\t   <div class=\"col-md-9 grid_2\">\r\n\t   \t  <h3>Start Dating Now !</h3>\r\n\t   \t  <h4>Download our mobile apps and start dating right now.</h4>\r\n\t   \t  <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore.</p>\r\n\t      <ul class=\"apps wow fadeInLeft\" data-wow-delay=\"0.4s\">\r\n\t\t    <li><a href=\"#\"><i class=\"app\"></i></a></li>\r\n\t\t\t<li><a href=\"#\"><i class=\"google\"></i></a></li>\r\n\t\t  </ul>\r\n\t\t   <h5>OR</h5>\r\n\t\t   <a href=\"#\" class=\"btn3 btn-3 btn3-1b\">Sign Up</a>\r\n\t   </div>\r\n\t   <div class=\"col-md-3 grid_3 wow fadeInRight\" data-wow-delay=\"0.4s\">\r\n\t   \t   <span> </span>\r\n\t   </div>\r\n\t</div>\r\n</div>\r\n<div class=\"content_bottom\">\r\n\t<div class=\"container\">\r\n\r\n\t  <div class=\"row\">\r\n\t\t<div class=\"col-md-4 wow fadeInLeft\" data-wow-delay=\"0.4s\">\r\n\t\t  <div class=\"grid_4\"><a href=\"single.html\">\r\n\t\t\t<h4><span class=\"m_3\">Leonardo , </span> Manager-usa</h4>\r\n\t\t\t<img src=\"../../assets/web/images/pic1.jpg\" class=\"img-responsive\" alt=\"\"/>\r\n\t\t\t<ul class=\"category_desc\">\r\n\t\t\t   <li class=\"cate_head\">Based in 1.100 votes</li>\r\n\t\t\t   <li class=\"cate_right\">\r\n\t\t\t   \t <ul class=\"list1\">\r\n\t\t\t   \t    <li><i class=\"heart\"> </i></li>\r\n\t\t\t   \t    <li><i class=\"heart\"> </i></li>\r\n\t\t\t   \t    <li><i class=\"heart\"> </i></li>\r\n\t\t\t   \t    <li><i class=\"heart\"> </i></li>\r\n\t\t\t   \t </ul>\r\n\t\t\t   </li>\r\n\t\t\t   <div class=\"clearfix\"> </div>\r\n\t\t\t</ul>\r\n\t\t\t<h5>Full Profile</h5>\r\n\t\t</a> </div>\r\n\t\t</div>\r\n\t\t<div class=\"col-md-4 wow fadeInUp\" data-wow-delay=\"0.4s\">\r\n\t\t   <div class=\"grid_4\"><a href=\"single.html\">\r\n\t\t\t<h4><span class=\"m_3\">luke ,</span>engineer-usa</h4>\r\n\t\t\t<img src=\"../../assets/web/images/pic2.jpg\" class=\"img-responsive\" alt=\"\"/>\r\n\t\t\t<ul class=\"category_desc\">\r\n\t\t\t   <li class=\"cate_head\">Based in 956 votes</li>\r\n\t\t\t   <li class=\"cate_right\">\r\n\t\t\t   \t <ul class=\"list1\">\r\n\t\t\t   \t   <li><i class=\"heart\"> </i></li>\r\n\t\t\t   \t   <li><i class=\"heart\"> </i></li>\r\n\t\t\t   \t   <li><i class=\"heart\"> </i></li>\r\n\t\t\t   \t </ul>\r\n\t\t\t   </li>\r\n\t\t\t   <div class=\"clearfix\"> </div>\r\n\t\t\t</ul>\r\n\t\t\t<h5>Full Profile</h5>\r\n\t\t  </a></div>\r\n\t    </div>\r\n\t\t<div class=\"col-md-4 wow fadeInRight\" data-wow-delay=\"0.4s\">\r\n\t\t  <div class=\"grid_4\"><a href=\"single.html\">\r\n\t\t\t<h4><span class=\"m_3\">max ,</span>security-usa</h4>\r\n\t\t\t<img src=\"../../assets/web/images/pic3.jpg\" class=\"img-responsive\" alt=\"\"/>\r\n\t\t\t<ul class=\"category_desc\">\r\n\t\t\t   <li class=\"cate_head\">Based in 900 votes</li>\r\n\t\t\t   <li class=\"cate_right\">\r\n\t\t\t   \t <ul class=\"list1\">\r\n\t\t\t   \t    <li><i class=\"heart\"> </i></li>\r\n\t\t\t   \t    <li><i class=\"heart\"> </i></li>\r\n\t\t\t   \t    <li><i class=\"heart\"> </i></li>\r\n\t\t\t   \t </ul>\r\n\t\t\t   </li>\r\n\t\t\t   <div class=\"clearfix\"> </div>\r\n\t\t\t</ul>\r\n\t\t\t<h5>Full Profile</h5>\r\n\t\t  </a></div>\r\n\t    </div>\r\n\t\t<div class=\"clearfix\"> </div>\r\n\t  </div>\r\n\t  <div class='span1'>\r\n\t\t  <select class=\"dropdown\" tabindex=\"10\" data-settings='{\"wrapperClass\":\"metro1\"}'>\r\n\t\t    <option value=\"0\">More Profiles</option>\t\r\n\t\t\t<option value=\"1\">Tincidunt</option>\r\n\t\t\t<option value=\"2\">Magna</option>\r\n\t\t\t<option value=\"3\">Lectores </option>\r\n\t\t\t<option value=\"4\">Insitam</option>\r\n\t\t\t<option value=\"5\">Claritatem </option>\r\n\t\t\t<option value=\"5\"></option>\r\n\t\t\t<option value=\"5\"></option>\r\n\t\t  </select>\r\n\t  </div>\r\n\t  <div class='clearfix'> </div>\r\n\t  <div class=\"search wow bounceInUp\" data-wow-delay=\"0.4s\">\r\n   \t    <h3>Looking for someone ? </h3>\r\n   \t    <form>\r\n\t\t <span>\r\n\t\t   <div class=\"search-box\">\r\n\t\t   \t<i class=\"search-icon\"> </i>\r\n\t\t    <input type=\"text\" value=\"Type something here...\" onfocus=\"this.value = '';\" onblur=\"if (this.value == '') {this.value = 'Type something here...';}\">\r\n\t\t   </div>\r\n\t\t   <input name=\"submit\" type=\"submit\" id=\"submit\" value=\"Search\">\r\n\t\t </span>\t\r\n\t\t<div class=\"clearfix\"> </div>\r\n\t    </form>\r\n\t   <h4>Disclaimer</h4>\r\n\t   <p class=\"m_2\">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>\r\n       <p>Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum. </p>\r\n      </div>\r\n   </div>\r\n</div>\r\n<div class=\"footer\">\r\n\t<div class=\"container\">\r\n\t\t<div class=\"cssmenu wow fadeInLeft\" data-wow-delay=\"0.4s\">\r\n\t\t  <ul>\r\n\t\t\t<li class=\"active\"><a href=\"#\">Home</a></li> \r\n\t\t\t<li><a href=\"about.html\">About</a></li>\r\n\t\t\t<li><a href=\"profiles.html\">Add Profile</a></li>\r\n\t\t\t<li><a href=\"contact.html\">Contact</a></li>\r\n\t\t  </ul>\r\n\t    </div>\r\n\t    <div class=\"copy wow fadeInUp\" data-wow-delay=\"0.4s\">\r\n\t\t\t<p>&copy; 2014 Template by <a href=\"http://w3layouts.com\" target=\"_blank\">w3layouts</a></p>\r\n\t\t</div>\r\n\t\t<div class=\"social wow fadeInRight\" data-wow-delay=\"0.4s\"> \r\n\t\t\t<ul class=\"footer_social\">\r\n\t\t\t  <li><a href=\"#\"> <i class=\"fb\"> </i> </a></li>\r\n\t\t\t  <li><a href=\"#\"> <i class=\"tw\"> </i> </a></li>\r\n\t\t   </ul>\r\n\t\t</div>\r\n\t    <div class='clearfix'> </div>\r\n\t</div>\r\n</div>\r\n</body>\r\n</html>\t\t"
+module.exports = "\r\n\r\n\t<!DOCTYPE HTML>\r\n\t<html>\r\n\t<head>\r\n\t<title>Meet your soulmate</title>\r\n\t\r\n\t<!-- Custom Theme files -->\r\n\t\r\n\t<!-- Custom Theme files -->\r\n\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n\t<!--webfont-->\r\n\t<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>\r\n\t\r\n\t\r\n\t\t\t\r\n\t</head>\r\n\t<body>\r\n\t\r\n\t\t\r\n\t\t\t\r\n\t\t\t\r\n\t<div class=\"banner wow bounceInRight\" data-wow-delay=\"0.4s\">\r\n\t\t<div class=\"container\"> \r\n\t\t   <div class=\"banner_right\">\r\n\t\t\t   <h2>Find a perfect date</h2>\r\n\t\t\t   <h1>Share your perfect moments </h1>\r\n\t\t\t   <ul class=\"button\">\r\n\t\r\n\t\t\t\t <li><a href=\"#\" [routerLink]=\"['/Register']\" class=\"btn1 btn2 btn-1 btn1-1b\">Click to Get Started</a></li>\r\n\t\t\t\t\r\n\t\t\t   </ul>\r\n\t\t   </div>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"content_top\">\r\n\t  <div class=\"container row\">\r\n\t\t<div class=\"col-md-6 grid_1\">\r\n\t\t  <h2>London Lovestory</h2>\r\n\t\t  <iframe width=\"\" height=\"\" src=\"//www.youtube.com/embed/6KkS2mQsmw8\" frameborder=\"0\" allowfullscreen></iframe>\r\n\t\t</div>\r\n\t\t<div class=\"col-md-6 wow fadeInRight\">\r\n\t\t\t\t<div class=\"banner-info\">\r\n\t\t\t\t\t\t<h3>Meet Jokoyoski Makanga</h3>\r\n\t\t\t\t\t\t<h4><span class=\"m_2\">\"</span> .Net Software Developer<span class=\"m_2\"> \"</span></h4>\r\n\r\n\t\t\t\t\t\t<h5><span class=\"m_2\">\"</span> Single to Stupour<span class=\"m_2\"> \"</span></h5>\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t </div>\r\n\t\t</div>\r\n\t  </div>\r\n\t</div>\r\n\t\r\n\t<div class=\"content_middle wow fadeInUp\" data-wow-delay=\"0.4s\">\r\n\t\t<div class=\"container row\">\r\n\t\r\n\t\t   <div class=\"col-md-9 grid_2\">\r\n\t\t\t\t <h3>Start Dating Now !</h3>\r\n\t\t\t\t <h4>Download our mobile apps and start dating right now.</h4>\r\n\t\t\t\t <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore.</p>\r\n\t\t\t  <ul class=\"apps wow fadeInLeft\" data-wow-delay=\"0.4s\">\r\n\t\t\t\t<li><a href=\"#\"><i class=\"app\"></i></a></li>\r\n\t\t\t\t<li><a href=\"#\"><i class=\"google\"></i></a></li>\r\n\t\t\t  </ul>\r\n\t\t\t   <h5>OR</h5>\r\n\t\t\t   <a href=\"#\"  [routerLink]=\"['/Register']\" class=\"btn3 btn-3 btn3-1b\">Sign Up</a>\r\n\t\t   </div>\r\n\t\t   <div class=\"col-md-3 grid_3 wow fadeInRight\" data-wow-delay=\"0.4s\">\r\n\t\t\t\t  <span> </span>\r\n\t\t   </div>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"content_bottom\">\r\n\t\t<div class=\"container\">\r\n\t\r\n\t\t  <div class=\"row\">\r\n\t\t\t<div class=\"col-md-4 wow fadeInLeft\" data-wow-delay=\"0.4s\">\r\n\t\t\t  <div class=\"grid_4\"><a href=\"single.html\">\r\n\t\t\t\t<h4><span class=\"m_3\">Leonardo , </span> Manager-usa</h4>\r\n\t\t\t\t<img src=\"../../assets/web/images/pic1.jpg\" class=\"img-responsive\" alt=\"\"/>\r\n\t\t\t\t<ul class=\"category_desc\">\r\n\t\t\t\t   <li class=\"cate_head\">Based in 1.100 votes</li>\r\n\t\t\t\t   <li class=\"cate_right\">\r\n\t\t\t\t\t\t<ul class=\"list1\">\r\n\t\t\t\t\t\t   <li><i class=\"heart\"> </i></li>\r\n\t\t\t\t\t\t   <li><i class=\"heart\"> </i></li>\r\n\t\t\t\t\t\t   <li><i class=\"heart\"> </i></li>\r\n\t\t\t\t\t\t   <li><i class=\"heart\"> </i></li>\r\n\t\t\t\t\t\t</ul>\r\n\t\t\t\t   </li>\r\n\t\t\t\t   <div class=\"clearfix\"> </div>\r\n\t\t\t\t</ul>\r\n\t\t\t\t<h5>Member</h5>\r\n\t\t\t</a> </div>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"col-md-4 wow fadeInUp\" data-wow-delay=\"0.4s\">\r\n\t\t\t   <div class=\"grid_4\"><a href=\"single.html\">\r\n\t\t\t\t<h4><span class=\"m_3\">luke ,</span>engineer-usa</h4>\r\n\t\t\t\t<img src=\"../../assets/web/images/pic2.jpg\" class=\"img-responsive\" alt=\"\"/>\r\n\t\t\t\t<ul class=\"category_desc\">\r\n\t\t\t\t   <li class=\"cate_head\">Based in 956 votes</li>\r\n\t\t\t\t   <li class=\"cate_right\">\r\n\t\t\t\t\t\t<ul class=\"list1\">\r\n\t\t\t\t\t\t  <li><i class=\"heart\"> </i></li>\r\n\t\t\t\t\t\t  <li><i class=\"heart\"> </i></li>\r\n\t\t\t\t\t\t  <li><i class=\"heart\"> </i></li>\r\n\t\t\t\t\t\t</ul>\r\n\t\t\t\t   </li>\r\n\t\t\t\t   <div class=\"clearfix\"> </div>\r\n\t\t\t\t</ul>\r\n\t\t\t\t<h5>Member</h5>\r\n\t\t\t  </a></div>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"col-md-4 wow fadeInRight\" data-wow-delay=\"0.4s\">\r\n\t\t\t  <div class=\"grid_4\"><a href=\"single.html\">\r\n\t\t\t\t<h4><span class=\"m_3\">Jokoyoski ,</span>Software Developer-Nigeria</h4>\r\n\t\t\t\t<img src=\"http://res.cloudinary.com/jokoyoski/image/upload/v1561391201/dz8idd6czylpfa7zvbst.jpg\" width=\"360px\" height=\"260\" class=\"img-responsive\" alt=\"\"/>\r\n\t\t\t\t<ul class=\"category_desc\">\r\n\t\t\t\t   <li class=\"cate_head\">Based in 900 votes</li>\r\n\t\t\t\t   <li class=\"cate_right\">\r\n\t\t\t\t\t\t<ul class=\"list1\">\r\n\t\t\t\t\t\t   <li><i class=\"heart\"> </i></li>\r\n\t\t\t\t\t\t   <li><i class=\"heart\"> </i></li>\r\n\t\t\t\t\t\t   <li><i class=\"heart\"> </i></li>\r\n\t\t\t\t\t\t</ul>\r\n\t\t\t\t   </li>\r\n\t\t\t\t   <div class=\"clearfix\"> </div>\r\n\t\t\t\t</ul>\r\n\t\t\t\t<h5>Member</h5>\r\n\t\t\t  </a></div>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"clearfix\"> </div>\r\n\t\t  </div>\r\n\t\t  <div class='span1'>\r\n\t\t\t  <select class=\"dropdown\" tabindex=\"10\" data-settings='{\"wrapperClass\":\"metro1\"}'>\r\n\t\t\t\t<option value=\"0\">More Profiles</option>\t\r\n\t\t\t\t<option value=\"1\">Tincidunt</option>\r\n\t\t\t\t<option value=\"2\">Magna</option>\r\n\t\t\t\t<option value=\"3\">Lectores </option>\r\n\t\t\t\t<option value=\"4\">Insitam</option>\r\n\t\t\t\t<option value=\"5\">Claritatem </option>\r\n\t\t\t\t<option value=\"5\"></option>\r\n\t\t\t\t<option value=\"5\"></option>\r\n\t\t\t  </select>\r\n\t\t  </div>\r\n\t\t  <div class='clearfix'> </div>\r\n\t\t\r\n\t   </div>\r\n\t</div>\r\n\t<div class=\"footer\">\r\n\t\t<div class=\"container\">\r\n\t\t\t<div class=\"cssmenu wow fadeInLeft\" data-wow-delay=\"0.4s\">\r\n\t\t\t  <ul>\r\n\t\t\t\t<li class=\"active\"><a href=\"#\">Home</a></li> \r\n\t\t\t\t<li><a href=\"about.html\">About</a></li>\r\n\t\t\t\t<li><a href=\"profiles.html\">Add Profile</a></li>\r\n\t\t\t\t<li><a href=\"contact.html\">Contact</a></li>\r\n\t\t\t  </ul>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"copy wow fadeInUp\" data-wow-delay=\"0.4s\">\r\n\t\t\t\t<p>&copy; 2014 Template by <a href=\"http://w3layouts.com\" target=\"_blank\">w3layouts</a></p>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"social wow fadeInRight\" data-wow-delay=\"0.4s\"> \r\n\t\t\t\t<ul class=\"footer_social\">\r\n\t\t\t\t  <li><a href=\"#\"> <i class=\"fb\"> </i> </a></li>\r\n\t\t\t\t  <li><a href=\"#\"> <i class=\"tw\"> </i> </a></li>\r\n\t\t\t   </ul>\r\n\t\t\t</div>\r\n\t\t\t<div class='clearfix'> </div>\r\n\t\t</div>\r\n\t</div>\r\n\t</body>\r\n\t</html>\t\t\r\n"
 
 /***/ }),
 
@@ -1194,17 +1564,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _Services_scriptsloader_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Services/scriptsloader.service */ "./src/app/Services/scriptsloader.service.ts");
+/* harmony import */ var _Services_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Services/auth.service */ "./src/app/Services/auth.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
+
 
 
 
 
 var HomeComponent = /** @class */ (function () {
-    function HomeComponent(http, fileInjectorService) {
+    function HomeComponent(http, fileInjectorService, router, auth) {
         this.http = http;
         this.fileInjectorService = fileInjectorService;
+        this.router = router;
+        this.auth = auth;
         this.registerMode = false;
     }
     HomeComponent.prototype.ngOnInit = function () {
+        var result = this.auth.loggedIn();
+        console.log(result);
+        if (result == true) {
+            this.router.navigate(['/members']);
+        }
         /** spinner starts on init */
         // this.fileInjectorService.loadJS('misc','easy','flexslider','wow','wowinit').then(data => {
         // console.log('script loaded',data);
@@ -1216,6 +1597,11 @@ var HomeComponent = /** @class */ (function () {
     };
     HomeComponent.prototype.cancelRegisterMode = function (registerMode) {
         this.registerMode = registerMode;
+    };
+    HomeComponent.prototype.loggedIn = function () {
+        var result = this.auth.loggedIn();
+        console.log(result);
+        return result;
     };
     HomeComponent.prototype.getValue = function () {
         var _this = this;
@@ -1233,7 +1619,7 @@ var HomeComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./home.component.html */ "./src/app/home/home.component.html"),
             styles: [__webpack_require__(/*! ./home.component.css */ "./src/app/home/home.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _Services_scriptsloader_service__WEBPACK_IMPORTED_MODULE_3__["ScriptsloaderService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _Services_scriptsloader_service__WEBPACK_IMPORTED_MODULE_3__["ScriptsloaderService"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"], _Services_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"]])
     ], HomeComponent);
     return HomeComponent;
 }());
@@ -1830,7 +2216,6 @@ var MemberMessagesComponent = /** @class */ (function () {
     };
     MemberMessagesComponent.prototype.sendMessage = function () {
         var _this = this;
-        this.alertify.success('ok');
         var id = localStorage.getItem('userId');
         this.anyMessage.recipientId = this.recipientId;
         this.anyMessage.userId = id;
@@ -1880,7 +2265,7 @@ module.exports = ".joka{\r\n background-color:#3a5878;\r\n}\r\n\r\n\r\n.font-fam
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n\r\n\r\n\r\n\r\n\r\n\r\n<div *ngIf= \"!loggedIn()\">\r\n\t\t<div class=\"header_left\">\r\n\t\t\t<img src=\"../../assets/web/images/rate.png\" alt=\"\"/>\r\n\t\t</div>\r\n\t\t<div class=\"logo\">\r\n\t\t\t<a href=\"index.html\"><img src=\"../../assets/web/images/logo.png\" alt=\"\"/>\r\n\t\t\t\t<span>Soulmate</span>\r\n\t\t\t</a>\r\n\t\t</div>\r\n\t\t<div class=\"header_right\">\r\n\t\t\t<ul class=\"header_user_info\">\r\n\t\t\t  <a class=\"login\" href=\"login.html\">\r\n\t\t\t\r\n\t\t\t\r\n\t\t\t\t<div class=\"clearfix\"> </div>\r\n\t\t\t  </a>\r\n\t\t\t  <div class=\"clearfix\"> </div>\r\n\t    \t</ul>\r\n       \r\n       \r\n\t\t</div>\r\n\t\t<div class=\"clearfix\"> </div>\r\n\t</div>\r\n\r\n\r\n\r\n\t<div *ngIf= \"loggedIn()\">\r\n\t\t<div class=\"header_left\">\r\n\t\t\t<img src=\"../../assets/web/images/rate.png\" alt=\"\"/>\r\n\t\t</div>\r\n\t\t<div></div>\r\n\t\t<div class=\"logo\">\r\n\t\t\t<a href=\"index.html\"><img src=\"../../assets/web/images/logo.png\" alt=\"\"/>\r\n\t\t\t\t<span>Soulmate</span>\r\n\t\t\t</a>\r\n\t\t</div>\r\n\t\t<div class=\"header_right\">\r\n\t\t\t<ul class=\"header_user_info\">\r\n\t\t\t\t<span>\r\n\t\t\t\t\t<img src=\"{{photoUrl}}\">\r\n\t\t\t\t\r\n\t\t\t\t</span>\r\n\t\t\t\r\n\t\t\t  <a class=\"login\"  (click)=\"loggedOut()\">\r\n\t\t\t\t<li class=\"user_desc\"><span class=\"m_1\"> </span>Log out</li>\r\n\t\t\t\t<i class=\"user\"> </i> \r\n\t\t\t\t\r\n\t\t\t\t<div class=\"clearfix\"> </div>\r\n\t\t\t  </a>\r\n\t\t\t  <div class=\"clearfix\"> </div>\r\n\t\t\t\t</ul>\r\n\t\t\t\t<span style=\"color:#3a5778\">Welcome {{authService.decodedTokenName}}</span>\r\n\t\r\n\t\t</div>\r\n\r\n\t\t<div class=\"clearfix\"> </div>\r\n\t</div>\r\n\t\r\n\t  \r\n<nav class=\"navbar navbar-expand-lg navbar-dark joka\">\r\n\t<div class=\"container-fluid\">\r\n\t\t<a class=\"navbar-brand\" [routerLink]=\"['/home']\">Dating App</a>\r\n\t\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n\t\t  <span class=\"navbar-toggler-icon\"></span>\r\n\t\t</button>\r\n\t  \r\n\t  \r\n\t\t\r\n\t\t<div *ngIf=\"loggedIn()\"   class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\r\n\t\t  <ul class=\"navbar-nav mr-auto\">\r\n\t\t\t<li class=\"nav-item\" routerLinkActive=\"active\">\r\n\t\t\t  <a class=\"nav-link font-fam\"    [routerLink]=\"['/members']\"><span class=\"text-colo\">Matches</span><span class=\"sr-only\">(current)</span></a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item\" routerLinkActive=\"active\">\r\n\t\t\t  <a class=\"nav-link font-fam text-colo\"  [routerLink]=\"['/likes']\"><span class=\"text-colo\">Favourites</span></a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item\" routerLinkActive=\"active\">\r\n\t\t\t  <a class=\"nav-link font-fam \" [routerLink]=\"['/Messages']\" ><span class=\"text-colo\">Messages</span></a>\r\n\t\t\t</li>\r\n\t\t  \r\n\t\t  </ul>\r\n\t  \r\n\t  \r\n\t\t <div >\r\n\t\t\t<a class=\"nav-link font-fam text-colo\" [routerLink]=\"['/member/edit']\" > <i class=\"fa fa-user\"></i><span class=\"text-colo\">Edit Profile</span></a>\r\n\t\t </div>\r\n\t  \r\n\t\t\t\t\t\t\t\t  <!--if statment refrencing to our fxn in .ts-->        <!--the submit is the function that submits to the .ts file-->\r\n\t\t \r\n\t\t</div> \r\n\t</div>\r\n\t\r\n  </nav>"
+module.exports = "\r\n\r\n\r\n\r\n\r\n\r\n\r\n<div *ngIf= \"!loggedIn()\">\r\n\t\t<div class=\"header_left\">\r\n\t\t\t<img src=\"../../assets/web/images/rate.png\" alt=\"\"/>\r\n\t\t</div>\r\n\t\t<div class=\"logo\">\r\n\t\t\t<a href=\"index.html\"><img src=\"../../assets/web/images/logo.png\" alt=\"\"/>\r\n\t\t\t\t<span>Soulmate</span>\r\n\t\t\t</a>\r\n\t\t</div>\r\n\t\t<div class=\"header_right\">\r\n\t\t\t<ul class=\"header_user_info\">\r\n\t\t\t  <a class=\"login\" href=\"login.html\">\r\n\t\t\t\r\n\t\t\t\r\n\t\t\t\t<div class=\"clearfix\"> </div>\r\n\t\t\t  </a>\r\n\t\t\t  <div class=\"clearfix\"> </div>\r\n\t    \t</ul>\r\n       \r\n       \r\n\t\t</div>\r\n\t\t<div class=\"clearfix\"> </div>\r\n\t</div>\r\n\r\n\r\n\r\n\t<div *ngIf= \"loggedIn()\">\r\n\t\t<div class=\"header_left\">\r\n\t\t\t<img src=\"../../assets/web/images/rate.png\" alt=\"\"/>\r\n\t\t</div>\r\n\t\t<div></div>\r\n\t\t<div class=\"logo\">\r\n\t\t\t<a href=\"index.html\"><img src=\"../../assets/web/images/logo.png\" alt=\"\"/>\r\n\t\t\t\t<span>Soulmate</span>\r\n\t\t\t</a>\r\n\t\t</div>\r\n\t\t<div class=\"header_right\">\r\n\t\t\t<ul class=\"header_user_info\">\r\n\t\t\t\t<span>\r\n\t\t\t\t\t<img src=\"{{photoUrl}}\">\r\n\t\t\t\t\r\n\t\t\t\t</span>\r\n\t\t\t\r\n\t\t\t  <a class=\"login\"  (click)=\"loggedOut()\">\r\n\t\t\t\t<li class=\"user_desc\"><span class=\"m_1\"> </span>Log out</li>\r\n\t\t\t\t<i class=\"user\"> </i> \r\n\t\t\t\t\r\n\t\t\t\t<div class=\"clearfix\"> </div>\r\n\t\t\t  </a>\r\n\t\t\t  <div class=\"clearfix\"> </div>\r\n\t\t\t\t</ul>\r\n\t\t\t\t<span style=\"color:#3a5778\">Welcome {{authService.decodedTokenName}}</span>\r\n\t\r\n\t\t</div>\r\n\r\n\t\t<div class=\"clearfix\"> </div>\r\n\t</div>\r\n\t\r\n\t  \r\n<nav class=\"navbar navbar-expand-lg navbar-dark joka\">\r\n\t<div class=\"container-fluid\">\r\n\t\t<a class=\"navbar-brand\" [routerLink]=\"['/home']\">Jokoyoski</a>\r\n\t\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\" aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n\t\t  <span class=\"navbar-toggler-icon\"></span>\r\n\t\t</button>\r\n\t  \r\n\t  \r\n\t\t\r\n\t\t<div *ngIf=\"loggedIn()\"   class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\r\n\t\t  <ul class=\"navbar-nav mr-auto\">\r\n\t\t\t<li class=\"nav-item\" routerLinkActive=\"active\">\r\n\t\t\t  <a class=\"nav-link font-fam\"    [routerLink]=\"['/members']\"><span class=\"text-colo\">Matches</span><span class=\"sr-only\">(current)</span></a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item\" routerLinkActive=\"active\">\r\n\t\t\t  <a class=\"nav-link font-fam text-colo\"  [routerLink]=\"['/likes']\"><span class=\"text-colo\">Favourites</span></a>\r\n\t\t\t</li>\r\n\t\t\t<li class=\"nav-item\" routerLinkActive=\"active\">\r\n\t\t\t  <a class=\"nav-link font-fam \" [routerLink]=\"['/Messages']\" ><span class=\"text-colo\">Messages</span></a>\r\n\t\t\t</li>\r\n\t\t\t<li  *appRole=\"['Admin']\" class=\"nav-item\" routerLinkActive=\"active\">\r\n\t\t\t  <a  class=\"nav-link font-fam \" [routerLink]=\"['/admin']\" ><span class=\"text-colo\">Admin</span></a>\r\n\t\t\t</li>\r\n\t\t  \r\n\t\t  </ul>\r\n\t  \r\n\t  \r\n\t\t <div >\r\n\t\t\t<a class=\"nav-link font-fam text-colo\" [routerLink]=\"['/member/edit']\" > <i class=\"fa fa-user\"></i><span class=\"text-colo\">Edit Profile</span></a>\r\n\t\t </div>\r\n\t  \r\n\t\t\t\t\t\t\t\t  <!--if statment refrencing to our fxn in .ts-->        <!--the submit is the function that submits to the .ts file-->\r\n\t\t \r\n\t\t</div> \r\n\t</div>\r\n\t\r\n  </nav>"
 
 /***/ }),
 
@@ -2101,7 +2486,7 @@ module.exports = ".btn0\r\n{\r\nbackground-color: #d26e8e;\r\ncolor: white;\r\n}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!---->\r\n\r\n\r\n\r\n\r\n<body>\r\n    \r\n    <div class=\"profile_banner\">\r\n      <div class=\"container\"> \r\n         <h3>Login</h3>\r\n      </div>\r\n    </div>\r\n    <div class='profiles'>\r\n      <div class=\"container\">\r\n        <div class=\"account_grid row\">\r\n           <div class=\"col-md-6 login-left\">\r\n               <h3>NEW CUSTOMERS</h3>\r\n             <p class='myfont'>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>\r\n \r\n             \r\n             <form [formGroup]=\"registerForm\" (submit)=\"register()\">\r\n\r\n                <div class=\"form-group\">\r\n                    <label class=\"control-label\" style=\"margin-right:10px\">I am a: </label>\r\n                    <label class=\"radio-inline\">\r\n                      <input class=\"mr-3\" type=\"radio\" value=\"male\" formControlName=\"Gender\">Male\r\n                    </label>\r\n                    <label class=\"radio-inline ml-3\">\r\n                      <input class=\"mr-3\" type=\"radio\" value=\"female\" formControlName=\"Gender\">Female\r\n                    </label>\r\n                  </div>\r\n                <div class=\"form-group\">\r\n                      <!--has to be same name as the one on the component-->\r\n                    <input formControlName=\"UserName\" placeholder=\"UserName\"  type=\"text\" [ngClass]=\"{'is-invalid': registerForm.get('UserName').errors && registerForm.get('UserName').touched }\" class=\"form-control \"/>\r\n               <div class=\"invalid-feedback\">Please choose a UserName</div>\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                      <input [ngClass]=\"{'is-invalid': registerForm.get('KnownAs').errors && registerForm.get('KnownAs').touched}\" class=\"form-control\"\r\n                        placeholder=\"Known As\" formControlName=\"KnownAs\">\r\n                      <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('KnownAs').touched && registerForm.get('KnownAs').hasError('required')\">Known as is required</div>\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <input [ngClass]=\"{'is-invalid': registerForm.get('City').errors && registerForm.get('City').touched}\" class=\"form-control\"\r\n                          placeholder=\"City\" formControlName=\"City\">\r\n                        <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('City').touched && registerForm.get('City').hasError('required')\">City is required</div>\r\n                      </div>\r\n                      <div class=\"form-group\">\r\n                          <input [ngClass]=\"{'is-invalid': registerForm.get('DateOfBirth').errors && registerForm.get('DateOfBirth').touched}\" class=\"form-control\"\r\n                            placeholder=\"Date of Birth\" formControlName=\"DateOfBirth\" type=\"date\">\r\n                          <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('DateOfBirth').touched && registerForm.get('DateOfBirth').hasError('required')\">Date of Birth is required</div>\r\n                        </div>\r\n                      <div class=\"form-group\">\r\n                        <input [ngClass]=\"{'is-invalid': registerForm.get('Country').errors && registerForm.get('Country').touched}\" class=\"form-control\"\r\n                          placeholder=\"Country\" formControlName=\"Country\">\r\n                        <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('Country').touched && registerForm.get('Country').hasError('required')\">Country is required</div>\r\n                      </div>\r\n                    \r\n                <div class=\"form-group\">\r\n                  <label class=\"control-label\" style=\"margin-right:10px\">I am Looking For: </label>\r\n                  <label class=\"radio-inline\">\r\n                    <input class=\"mr-3\" type=\"radio\" value=\"female\" formControlName=\"LookingFor\">Female\r\n                  </label>\r\n                  <label class=\"radio-inline ml-3\">\r\n                    <input class=\"mr-3\" type=\"radio\" value=\"male\" formControlName=\"LookingFor\">male\r\n                  </label>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                   \r\n                    <input type=\"password\" [ngClass]=\"{'is-invalid': registerForm.get('Password').errors && registerForm.get('Password').touched }\" placeholder=\"Password\" formControlName=\"Password\"   class=\"form-control\"/>\r\n                     <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('Password').hasError('required') && registerForm.get('Password').touched \">Please choose a Password</div>\r\n\r\n                     <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('Password').hasError('minlength') && registerForm.get('Password').touched \">Please require at least 4 characters</div>\r\n\r\n                  </div>\r\n                <div class=\"form-group\">\r\n                \r\n                    <input type=\"password\" [ngClass]=\"{'is-invalid': registerForm.get('ConfirmPassword').errors && registerForm.get('ConfirmPassword').touched ||registerForm.get('ConfirmPassword').touched && registerForm.hasError('mismatch')}\"  placeholder=\"Confirm Password\" formControlName=\"ConfirmPassword\"   class=\"form-control\"/>\r\n                    <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('ConfirmPassword').hasError('required') && registerForm.get('ConfirmPassword').touched \">Please fill in the blanks</div>\r\n                    <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('ConfirmPassword').hasError('mismatch') && registerForm.get('ConfirmPassword').touched \">Password must match</div>\r\n\r\n                  </div>\r\n                <input value=\"Register\" [disabled]=\"!registerForm.valid\" type=\"submit\" class=\"btn btn0\"/>\r\n             </form>\r\n           </div>\r\n           <div class=\"col-md-6 login-right\">\r\n              <h3>REGISTERED CUSTOMERS</h3>\r\n            <p>If you have an account with us, please log in.</p>\r\n\r\n            <!--that ng Form here has no meaning, just to refrence to the form-->\r\n            <form (submit)=\"login()\"> \r\n              <div class=\"form-group\">\r\n                  <label for=\"userName\">Email</label>\r\n                  <input name=\"UserName\" [(ngModel)]=\"model.UserName\" placeholder=\"Email\" id=\"userName\" type=\"text\" class=\"form-control\"/>\r\n              </div>\r\n              <div class=\"form-group\">\r\n                  <label for=\"password\">Password</label>\r\n                  <input [(ngModel)]=\"model.Password\" name=\"Password\" placeholder=\"Password\" id=\"password\" type=\"text\" class=\"form-control\"/>\r\n              </div>\r\n            <input value=\"LOGIN\" type=\"submit\" class=\"btn btn0\"/>\r\n              </form>\r\n           </div>\r\n           <div class=\"clearfix\"> </div>\r\n         </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"footer\">\r\n      <div class=\"container\">\r\n        <div class=\"cssmenu\">\r\n          <ul>\r\n          <li class=\"active\"><a href=\"#\">Home</a></li> \r\n          <li><a href=\"about.html\">About</a></li>\r\n          <li><a href=\"profiles.html\">Add Profile</a></li>\r\n          <li><a href=\"contact.html\">Contact</a></li>\r\n          </ul>\r\n          </div>\r\n          <div class=\"copy\">\r\n          <p>&copy; 2014 Template by <a href=\"http://w3layouts.com\" target=\"_blank\">w3layouts</a></p>\r\n        </div>\r\n        <div class=\"social\"> \r\n          <ul class=\"footer_social\">\r\n            <li><a href=\"#\"> <i class=\"fb\"> </i> </a></li>\r\n            <li><a href=\"#\"> <i class=\"tw\"> </i> </a></li>\r\n           </ul>\r\n        </div>\r\n          <div class='clearfix'> </div>\r\n      </div>\r\n    </div>\r\n    </body>\r\n\r\n\r\n"
+module.exports = "<!---->\r\n\r\n\r\n\r\n\r\n<body>\r\n    \r\n    <div class=\"profile_banner\">\r\n      <div class=\"container\"> \r\n         <h3>Login</h3>\r\n      </div>\r\n    </div>\r\n    <div class='profiles'>\r\n      <div class=\"container\">\r\n        <div class=\"account_grid row\">\r\n           <div class=\"col-md-6 login-left\">\r\n               <h3>NEW CUSTOMERS</h3>\r\n             <p class='myfont'>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>\r\n \r\n             \r\n             <form [formGroup]=\"registerForm\" (submit)=\"register()\">\r\n\r\n                <div class=\"form-group\">\r\n                    <label class=\"control-label\" style=\"margin-right:10px\">I am a: </label>\r\n                    <label class=\"radio-inline\">\r\n                      <input class=\"mr-3\" type=\"radio\" value=\"male\" formControlName=\"Gender\">Male\r\n                    </label>\r\n                    <label class=\"radio-inline ml-3\">\r\n                      <input class=\"mr-3\" type=\"radio\" value=\"female\" formControlName=\"Gender\">Female\r\n                    </label>\r\n                  </div>\r\n                <div class=\"form-group\">\r\n                      <!--has to be same name as the one on the component-->\r\n                    <input formControlName=\"UserName\" placeholder=\"UserName\"  type=\"text\" [ngClass]=\"{'is-invalid': registerForm.get('UserName').errors && registerForm.get('UserName').touched }\" class=\"form-control \"/>\r\n               <div class=\"invalid-feedback\">Please choose a UserName</div>\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                      <input [ngClass]=\"{'is-invalid': registerForm.get('KnownAs').errors && registerForm.get('KnownAs').touched}\" class=\"form-control\"\r\n                        placeholder=\"Known As\" formControlName=\"KnownAs\">\r\n                      <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('KnownAs').touched && registerForm.get('KnownAs').hasError('required')\">Known as is required</div>\r\n                    </div>\r\n                    <div class=\"form-group\">\r\n                        <input [ngClass]=\"{'is-invalid': registerForm.get('City').errors && registerForm.get('City').touched}\" class=\"form-control\"\r\n                          placeholder=\"City\" formControlName=\"City\">\r\n                        <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('City').touched && registerForm.get('City').hasError('required')\">City is required</div>\r\n                      </div>\r\n                      <div class=\"form-group\">\r\n                          <input [ngClass]=\"{'is-invalid': registerForm.get('DateOfBirth').errors && registerForm.get('DateOfBirth').touched}\" class=\"form-control\"\r\n                            placeholder=\"Date of Birth\" formControlName=\"DateOfBirth\" type=\"date\">\r\n                          <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('DateOfBirth').touched && registerForm.get('DateOfBirth').hasError('required')\">Date of Birth is required</div>\r\n                        </div>\r\n                      <div class=\"form-group\">\r\n                        <input [ngClass]=\"{'is-invalid': registerForm.get('Country').errors && registerForm.get('Country').touched}\" class=\"form-control\"\r\n                          placeholder=\"Country\" formControlName=\"Country\">\r\n                        <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('Country').touched && registerForm.get('Country').hasError('required')\">Country is required</div>\r\n                      </div>\r\n                    \r\n                <div class=\"form-group\">\r\n                  <label class=\"control-label\" style=\"margin-right:10px\">I am Looking For: </label>\r\n                  <label class=\"radio-inline\">\r\n                    <input class=\"mr-3\" type=\"radio\" value=\"female\" formControlName=\"LookingFor\">Female\r\n                  </label>\r\n                  <label class=\"radio-inline ml-3\">\r\n                    <input class=\"mr-3\" type=\"radio\" value=\"male\" formControlName=\"LookingFor\">male\r\n                  </label>\r\n                </div>\r\n                <div class=\"form-group\">\r\n                   \r\n                    <input type=\"password\" [ngClass]=\"{'is-invalid': registerForm.get('Password').errors && registerForm.get('Password').touched }\" placeholder=\"Password\" formControlName=\"Password\"   class=\"form-control\"/>\r\n                     <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('Password').hasError('required') && registerForm.get('Password').touched \">Please choose a Password</div>\r\n\r\n                     <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('Password').hasError('minlength') && registerForm.get('Password').touched \">Please require at least 4 characters</div>\r\n\r\n                  </div>\r\n                <div class=\"form-group\">\r\n                \r\n                    <input type=\"password\" [ngClass]=\"{'is-invalid': registerForm.get('ConfirmPassword').errors && registerForm.get('ConfirmPassword').touched ||registerForm.get('ConfirmPassword').touched && registerForm.hasError('mismatch')}\"  placeholder=\"Confirm Password\" formControlName=\"ConfirmPassword\"   class=\"form-control\"/>\r\n                    <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('ConfirmPassword').hasError('required') && registerForm.get('ConfirmPassword').touched \">Please fill in the blanks</div>\r\n                    <div class=\"invalid-feedback\" *ngIf=\"registerForm.get('ConfirmPassword').hasError('mismatch') && registerForm.get('ConfirmPassword').touched \">Password must match</div>\r\n\r\n                  </div>\r\n                <input value=\"Register\" [disabled]=\"!registerForm.valid\" type=\"submit\" class=\"btn btn0\"/>\r\n             </form>\r\n           </div>\r\n           <div class=\"col-md-6 login-right\">\r\n              <h3>REGISTERED CUSTOMERS</h3>\r\n            <p>If you have an account with us, please log in.</p>\r\n\r\n            <!--that ng Form here has no meaning, just to refrence to the form-->\r\n            <form (submit)=\"login()\"> \r\n              <div class=\"form-group\">\r\n                  <label for=\"userName\">Email</label>\r\n                  <input name=\"UserName\" [(ngModel)]=\"model.UserName\" placeholder=\"Email\" id=\"userName\" type=\"text\" class=\"form-control\"/>\r\n              </div>\r\n              <div class=\"form-group\">\r\n                  <label for=\"password\">Password</label>\r\n                  <input [(ngModel)]=\"model.Password\" name=\"Password\" placeholder=\"Password\" id=\"password\" type=\"password\" class=\"form-control\"/>\r\n              </div>\r\n            <input value=\"LOGIN\" type=\"submit\" class=\"btn btn0\"/>\r\n              </form>\r\n           </div>\r\n           <div class=\"clearfix\"> </div>\r\n         </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"footer\">\r\n      <div class=\"container\">\r\n        <div class=\"cssmenu\">\r\n          <ul>\r\n          <li class=\"active\"><a href=\"#\">Home</a></li> \r\n          <li><a href=\"about.html\">About</a></li>\r\n          <li><a href=\"profiles.html\">Add Profile</a></li>\r\n          <li><a href=\"contact.html\">Contact</a></li>\r\n          </ul>\r\n          </div>\r\n          <div class=\"copy\">\r\n          <p>&copy; 2014 Template by <a href=\"http://w3layouts.com\" target=\"_blank\">w3layouts</a></p>\r\n        </div>\r\n        <div class=\"social\"> \r\n          <ul class=\"footer_social\">\r\n            <li><a href=\"#\"> <i class=\"fb\"> </i> </a></li>\r\n            <li><a href=\"#\"> <i class=\"tw\"> </i> </a></li>\r\n           </ul>\r\n        </div>\r\n          <div class='clearfix'> </div>\r\n      </div>\r\n    </div>\r\n    </body>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -2239,6 +2624,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _register_register_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./register/register.component */ "./src/app/register/register.component.ts");
 /* harmony import */ var src_resolvers_lists_resolver__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! src/_resolvers/lists.resolver */ "./src/_resolvers/lists.resolver.ts");
 /* harmony import */ var src_resolvers_message_resolvers__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! src/_resolvers/message.resolvers */ "./src/_resolvers/message.resolvers.ts");
+/* harmony import */ var _admin_admin_panel_admin_panel_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./admin/admin-panel/admin-panel.component */ "./src/app/admin/admin-panel/admin-panel.component.ts");
+
 
 
 
@@ -2253,16 +2640,44 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var appRoutes = [
-    { path: 'Home', component: _home_home_component__WEBPACK_IMPORTED_MODULE_0__["HomeComponent"] },
+    { path: '', component: _home_home_component__WEBPACK_IMPORTED_MODULE_0__["HomeComponent"] },
+    {
+        path: '',
+        runGuardsAndResolvers: 'always',
+        canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]],
+        children: [
+            // tslint:disable-next-line: max-line-length
+            { path: 'members/:id', component: _members_member_detail_member_detail_component__WEBPACK_IMPORTED_MODULE_5__["MemberDetailComponent"], resolve: { user: src_resolvers_member_detail_resolver__WEBPACK_IMPORTED_MODULE_6__["MemberDetailResolver"] } },
+            { path: 'likes', component: _list_list_component__WEBPACK_IMPORTED_MODULE_3__["ListComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]], resolve: { users: src_resolvers_lists_resolver__WEBPACK_IMPORTED_MODULE_11__["ListsResolver"] } },
+            { path: 'member/edit', component: _members_member_edit_member_edit_component__WEBPACK_IMPORTED_MODULE_8__["MemberEditComponent"], resolve: { user: src_resolvers_member_edit_resolver__WEBPACK_IMPORTED_MODULE_9__["MemberEditResolver"] } },
+            { path: 'Messages', component: _Messages_Messages_component__WEBPACK_IMPORTED_MODULE_1__["MessagesComponent"], resolve: { messages: src_resolvers_message_resolvers__WEBPACK_IMPORTED_MODULE_12__["MessageResolver"] } },
+            { path: 'members', component: _members_Member_List_Member_List_component__WEBPACK_IMPORTED_MODULE_2__["MemberListComponent"], resolve: { users: src_resolvers_member_list_resolver__WEBPACK_IMPORTED_MODULE_7__["MemberListResolver"] } },
+            { path: 'admin', component: _admin_admin_panel_admin_panel_component__WEBPACK_IMPORTED_MODULE_13__["AdminPanelComponent"], data: { roles: ['Admin'] } },
+        ]
+    },
     { path: 'Register', component: _register_register_component__WEBPACK_IMPORTED_MODULE_10__["RegisterComponent"] },
-    // tslint:disable-next-line: max-line-length
-    { path: 'members/:id', component: _members_member_detail_member_detail_component__WEBPACK_IMPORTED_MODULE_5__["MemberDetailComponent"], resolve: { user: src_resolvers_member_detail_resolver__WEBPACK_IMPORTED_MODULE_6__["MemberDetailResolver"] } },
-    { path: 'likes', component: _list_list_component__WEBPACK_IMPORTED_MODULE_3__["ListComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]], resolve: { users: src_resolvers_lists_resolver__WEBPACK_IMPORTED_MODULE_11__["ListsResolver"] } },
-    { path: 'member/edit', component: _members_member_edit_member_edit_component__WEBPACK_IMPORTED_MODULE_8__["MemberEditComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]], resolve: { user: src_resolvers_member_edit_resolver__WEBPACK_IMPORTED_MODULE_9__["MemberEditResolver"] } },
-    { path: 'Messages', component: _Messages_Messages_component__WEBPACK_IMPORTED_MODULE_1__["MessagesComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]], resolve: { messages: src_resolvers_message_resolvers__WEBPACK_IMPORTED_MODULE_12__["MessageResolver"] } },
-    { path: 'members', component: _members_Member_List_Member_List_component__WEBPACK_IMPORTED_MODULE_2__["MemberListComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]], resolve: { users: src_resolvers_member_list_resolver__WEBPACK_IMPORTED_MODULE_7__["MemberListResolver"] } },
     { path: '**', redirectTo: 'Home', pathMatch: 'full' }
 ];
+
+
+/***/ }),
+
+/***/ "./src/environments/environment.prod.ts":
+/*!**********************************************!*\
+  !*** ./src/environments/environment.prod.ts ***!
+  \**********************************************/
+/*! exports provided: environment */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() { return environment; });
+var environment = {
+    production: true,
+    api: 'http://jokoyoski200-001-site1.itempurl.com/api/',
+    whitelist: ['http://jokoyoski200-001-site1.itempurl.com'],
+    version: 'x.x.x',
+};
 
 
 /***/ }),
@@ -2282,7 +2697,7 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 var environment = {
     production: false,
-    apiURL: 'http//localhost:5000/api/'
+    apiURL: 'jokoyoski200-001-site1.itempurl.com/api/'
 };
 /*
  * For easier debugging in development mode, you can import the following file

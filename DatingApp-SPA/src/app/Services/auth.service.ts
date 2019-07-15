@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import { environment } from 'src/environments/environment.prod';
 import {BehaviorSubject} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 @Injectable({
@@ -16,12 +17,13 @@ result: any;
 photoUrl = new BehaviorSubject<string>('../../assets/web/images/user.png');
 currentPhotoUrl = this.photoUrl.asObservable();
   jwtHelper = new JwtHelperService();
-  
+
    Gender: any;
-   mainUrl ='http://jokoyoski200-001-site1.itempurl.com/api/';
+   mainUrl: any = environment.api;
    registerURL = 'http://localhost:5000/api/';
   httpClient: any;
-constructor(private http: HttpClient) { }
+
+constructor(private http: HttpClient, ) { }
 
 canMemberChangePhoto(photoUrl: string) {
 
@@ -30,8 +32,8 @@ this.photoUrl.next(photoUrl);   // the behaviour subject has a next attr which s
 }
 
 login(model: any) {
-
-        return this.http.post('http://jokoyoski200-001-site1.itempurl.com/api/auth/Login', model)
+        console.log(this.mainUrl);
+        return this.http.post('http://jokoyoski200-001-site1.itempurl.com/api/auth/login', model)
         .pipe( // the post is an observable so we always need to pipe an observable
 
           map((response: any) => {   // maping of the values
@@ -69,6 +71,7 @@ login(model: any) {
 
 
             }
+            console.log(localStorage.getItem('token'));
           })
         );
 
@@ -112,5 +115,17 @@ login(model: any) {
             const tokenId = localStorage.getItem('userId');
             const url =  this.mainUrl + 'photos/' + photoId + '/' + tokenId + '/deletePhoto';
             return this.http.get(url);
+}
+roleMatch(allowedRoles): boolean {
+let isMatch = false;
+
+const userRoles = this.decodedToken.role as Array<string>;
+allowedRoles.forEach(element => {
+if (userRoles.includes(element)){
+  isMatch = true;
+}
+
+});
+return isMatch;
 }
 }

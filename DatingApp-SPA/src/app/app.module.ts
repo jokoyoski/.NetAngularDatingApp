@@ -26,6 +26,7 @@ import { MemberDetailResolver } from 'src/_resolvers/member-detail.resolver';
 import { MemberListResolver } from '../_resolvers/member-list.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditResolver } from '../_resolvers/member-edit.resolver';
+import {AdminPanelComponent} from './admin/admin-panel/admin-panel.component';
 import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { PaginationModule, ButtonsModule } from 'ngx-bootstrap';
@@ -34,6 +35,10 @@ import { ScriptsloaderService } from './Services/scriptsloader.service';
 import { ListsResolver } from 'src/_resolvers/lists.resolver';
 import { MessageResolver } from 'src/_resolvers/message.resolvers';
 import { MemberMessagesComponent } from './members/member-messages/MemberMessages.component';
+import { RoleDirective } from 'directives/role.directive';
+import { UserManagmentComponent } from './admin/user-managment/user-managment.component';
+import { PhotoManagmentComponent } from './admin/photo-managment/photo-managment.component';
+import { RolesModalComponent } from './admin/roles-modal/roles-modal.component';
 
 export function TokenGetter() {
    return localStorage.getItem('token');      // this is the token
@@ -42,6 +47,7 @@ export function TokenGetter() {
    declarations: [
       AppComponent,
       NavComponent,
+      AdminPanelComponent,
       HomeComponent,
       RegisterComponent,
       ListComponent,
@@ -52,7 +58,11 @@ export function TokenGetter() {
       MemberMessagesComponent,
       MemberDetailComponent,
       PhotoEditorComponent,
-      TimeAgoPipe
+      TimeAgoPipe,
+      RoleDirective,        //directives for role
+      UserManagmentComponent,
+      PhotoManagmentComponent,
+      RolesModalComponent
    ],
    imports: [
       PaginationModule.forRoot(),
@@ -77,9 +87,9 @@ export function TokenGetter() {
          config: {
             tokenGetter: TokenGetter
          ,
-// tslint:disable-next-line: max-line-length
-       whitelistedDomains: ['localhost:5000'],  // we just got the token from (Token Getter function above) and we  send request , it is automatically sending token
-       blacklistedRoutes: ['localhost:5000/api/auth']  // we dont want to send token to this address
+// tslint:disable-next-line: max-line-length  //
+       whitelistedDomains: ['jokoyoski200-001-site1.itempurl.com'],  // we just got the token from (Token Getter function above) and we  send request , it is automatically sending token
+       blacklistedRoutes: ['jokoyoski200-001-site1.itempurl.com/api/auth']  // we dont want to send token to this address
       }
       })
    ],

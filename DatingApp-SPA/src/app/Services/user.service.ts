@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+
 
 import { User } from 'Model/user';
 import { Observable } from 'rxjs';
@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 import { UserLike } from 'Model/UserLike';
 import { Like } from 'Model/Like';
 import { Message } from 'Model/Message';
+import { environment } from 'src/environments/environment.prod';
 
 
 
@@ -17,8 +18,8 @@ import { Message } from 'Model/Message';
   providedIn: 'root'
 })
 export class UserService {
-baseURL = environment.apiURL;
-mainUrl = 'http://jokoyoski200-001-site1.itempurl.com/api/';
+
+mainUrl :any =environment.api;
 constructor(private httpClient: HttpClient) { }
 
 
@@ -39,9 +40,9 @@ params = params.append('PageSize', itemsPerPage);
   }
   console.log(params);
 
-  console.log(this.baseURL);
+  
 
-  return this.httpClient.get<User[]>(this.mainUrl + 'users', {observe: 'response', params}).pipe(map(
+  return this.httpClient.get<User[]>(this.mainUrl+'users', {observe: 'response', params}).pipe(map(
 
   response => {
 
@@ -56,7 +57,7 @@ paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
 
   ));
 
-  console.log(this.baseURL);
+ 
 }
 
 GetUserLikes(page?, itemsPerPage?, userParams?): Observable<PaginatedResult<UserLike[]>> {
@@ -95,7 +96,7 @@ paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
 
   ));
 
-  console.log(this.baseURL);
+
 }
 // tslint:disable-next-line:ban-types
 UpdateUser(id, model: User): Observable<Object> {
@@ -117,6 +118,7 @@ LikeUser(like: Like): Observable<Object> {
 
 
 console.log(like);
+// tslint:disable-next-line: ban-types
 return this.httpClient.post<Object>(this.mainUrl + 'users/likeuser', like).pipe(map(response => {
     console.log(response);
 
@@ -126,7 +128,7 @@ return this.httpClient.post<Object>(this.mainUrl + 'users/likeuser', like).pipe(
 }
 
 getMessageThread(id: string, recipientId: number) {
-return this.httpClient.get<Message[]>(this.mainUrl +'message/GetMessageThread?userId=' + id + '&recipientId=' + recipientId);
+return this.httpClient.get<Message[]>(this.mainUrl + 'message/GetMessageThread?userId=' + id + '&recipientId=' + recipientId);
 }
 
 getMessages(page?, itemsPerPage?, messageContainer?): Observable<PaginatedResult<Message[]>> {

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ScriptsloaderService } from '../Services/scriptsloader.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AuthService } from '../Services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +13,16 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class HomeComponent implements OnInit {
    registerMode: any = false;
    values: any;
-  constructor(private http: HttpClient, private fileInjectorService: ScriptsloaderService) { }
+  constructor(private http: HttpClient, private fileInjectorService: ScriptsloaderService, private router: Router, private auth: AuthService) { }
 
   ngOnInit() {
+    const result = this.auth.loggedIn();
+    console.log(result);
+    if (result == true) {
+      this.router.navigate(['/members']);
+    }
     /** spinner starts on init */
-    
+
     // this.fileInjectorService.loadJS('misc','easy','flexslider','wow','wowinit').then(data => {
      // console.log('script loaded',data);
     // }).catch(error => console.log(error));
@@ -27,6 +34,15 @@ export class HomeComponent implements OnInit {
     cancelRegisterMode(registerMode: boolean) {
     this.registerMode = registerMode;
   }
+
+  loggedIn() {
+
+
+    const result = this.auth.loggedIn();
+    console.log(result);
+    return result;
+
+   }
     getValue() {
     console.log('ok');
     this.http.get('http://localhost:5000/api/values').subscribe(response => {

@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using DatingApp.API.Helper;
+using Microsoft.AspNetCore.Identity;
 
 namespace DatingApp.API.Controllers
 {
@@ -27,14 +28,22 @@ namespace DatingApp.API.Controllers
     {
         private readonly IAuthService authRepo;
         private readonly IConfiguration config;
+
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
           private  readonly IMapper mapper ;
         private readonly IDatingService datingService;
-        public AuthController(IAuthService authRepo,IConfiguration config,IMapper mapper,IDatingService datingService)
+        
+        public AuthController(IAuthService authRepo,SignInManager<User> signInManager,IConfiguration config,IMapper mapper,IDatingService datingService,UserManager<User> _userManager)
         {
         this.authRepo=authRepo;
         this.config=config;
         this.datingService=datingService;
+        this._signInManager=signInManager;
         this.mapper=mapper;
+        this._userManager=_userManager;
+      
+
         }
 
 
@@ -42,16 +51,14 @@ namespace DatingApp.API.Controllers
 
 [HttpPost("register")]
 
-public  IActionResult Register(UserForRegisterDTO userForRegisterDTO )
+public  async Task<IActionResult> Register(UserForRegisterDTO userForRegisterDTO )
         {
-
              var usersReturn=this.mapper.Map<User>(userForRegisterDTO);
+                
+               var user=this._userManager.FindByNameAsync(userForRegisterDTO.UserName);
               
-                 userForRegisterDTO.UserName=usersReturn.UserName.ToLower();
-                  
-                  
-                 var user=this.authRepo.IsUserExist(usersReturn.UserName);
-                 if(user==true)
+                 var result=await this._userManager.CreateAsync(usersReturn,usersReturn.Password);
+                 if(user.Result!=null)
                  {
                          return BadRequest("UserName already exist");
                  }
@@ -60,11 +67,16 @@ public  IActionResult Register(UserForRegisterDTO userForRegisterDTO )
                  {
                      UserName=usersReturn.UserName
                  };
-                 var createdUser=this.authRepo.RegisterUser(usersReturn,usersReturn.Password);
-             return Ok(new{
-                     success="User Has been Registered Successfully, You can then proceed tp login",
+                 
+                 if(result.Succeeded)
+                 {
+ return Ok(new{
+                     success="User Has been Registered Successfully, You can then proceed to login",
                    
                  });
+                 }
+            
+            return BadRequest(result.Errors);
                  
         }
 
@@ -74,40 +86,46 @@ public  IActionResult Register(UserForRegisterDTO userForRegisterDTO )
         {
             var result=string.Empty;
            try{
-   var userInfo=this.authRepo.LoginUser(userForRegisterDTO.UserName,userForRegisterDTO.password);
-            if(userInfo==null)
-            {
- return Unauthorized("You are mad ");
-            }
+   var userInfo=await this._userManager.FindByNameAsync(userForRegisterDTO.UserName);
+   var results= await this._signInManager.CheckPasswordSignInAsync(userInfo,userForRegisterDTO.password,false);
+   if(!results.Succeeded)
+   {
+  return BadRequest("You are not authorized");
+   }
+
+            
            
             
             
-            var claims= new[]
+            var claims= new List<Claim>
             {
-           new Claim(ClaimTypes.NameIdentifier,userInfo.id.ToString()),
+           new Claim(ClaimTypes.NameIdentifier,userInfo.Id.ToString()),
            new Claim(ClaimTypes.Name,userInfo.UserName),
 
             
             };
+            var roles=await this._userManager.GetRolesAsync(userInfo);   //get roles
+            foreach(var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role,role));
+            }
             var key= new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.config.GetSection("AppSettings:Token").Value));
             var creds= new SigningCredentials(key,SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor= new SecurityTokenDescriptor
             {
                 Subject= new ClaimsIdentity(claims),
-                Expires=DateTime.Now.AddHours(3),
+                Expires=DateTime.UtcNow.AddHours(3),
                 SigningCredentials=creds,
-                NotBefore=null
+                NotBefore=DateTime.UtcNow,
 
             };
-            if(tokenDescriptor.NotBefore!=null)
-            {
-                tokenDescriptor.NotBefore=null;
-            }
+         
             var tokenHandler= new JwtSecurityTokenHandler ();
 
             var token= tokenHandler.CreateToken(tokenDescriptor); 
-            var photoUrl=this.datingService.GetUserById(userInfo.id);
+
+            var photoUrl=this.datingService.GetUserById(userInfo.Id);
 
    
             return Ok(new {

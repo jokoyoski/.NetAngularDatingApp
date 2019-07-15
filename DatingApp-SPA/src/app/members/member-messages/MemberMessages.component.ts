@@ -55,7 +55,7 @@ if (messages[i].isRead == false && messages[i].recipientId == userId) {
 
 }
 sendMessage() {
-  this.alertify.success('ok');
+ 
   const id = localStorage.getItem('userId');
   this.anyMessage.recipientId = this.recipientId;
   this.anyMessage.userId = id;

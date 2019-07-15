@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using DatingApp.API.Model;
+using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 
 namespace DatingApp.API.Data
@@ -7,39 +8,29 @@ namespace DatingApp.API.Data
     public class UserSeed
     {
         private readonly DataContext _dataContext;
-
-        public UserSeed(DataContext dataContext)
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> roleManager;
+        public UserSeed(DataContext dataContext,UserManager<User> _userManager,RoleManager<Role> roleManager )
         {
         this._dataContext=dataContext;
+        this._userManager=_userManager;
+        this.roleManager=roleManager;
         }
 
         public void SeedUsers()
         {
-            var UserData=System.IO.File.ReadAllText("Data/UserSeedData.json");
-           var users = JsonConvert.DeserializeObject<List<User>>(UserData);
-           foreach(var user in users)
-           {
-             byte[] passwordHash, passwordSalt;
-             CreatePasswordHash("password",out passwordSalt,out passwordHash);
-             user.PasswordHash=passwordHash;
-            
-             user.UserName= user.UserName.ToLower();
-             _dataContext.Users.Add(user);
-
-
-           }
-         _dataContext.SaveChanges();
+            var user=new User{
+                UserName="Admin"
+            };
+            IdentityResult  result=this._userManager.CreateAsync(user,"password").Result;
+            if(result.Succeeded)
+            {
+                var admin=this._userManager.FindByNameAsync(user.UserName).Result;
+                this._userManager.AddToRolesAsync(admin,new[]{"Admin","Moderator"}).Wait();
+            }
         }
 
 
-         private void CreatePasswordHash(string password,out byte[] passwordHash,out byte[] passwordSalt)
-            {
-                          using(var hmac= new System.Security.Cryptography.HMACSHA512())
-                          {
-                              passwordSalt=hmac.Key;
-                              passwordHash=hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                          }
-            }
-    
+       
     }
 }

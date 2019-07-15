@@ -55,6 +55,7 @@ private readonly DataContext dataContext;
           {
               user.Gender=userId.Gender=="male" ?"female" :"male";
           }
+        user.UserId  =currentUserId;
           var users= await this.IdatingService.GetAllUsers(user);
          
 
@@ -88,7 +89,7 @@ private readonly DataContext dataContext;
 
   
    [HttpGet("GetUserLike")]
-   public async Task<IActionResult> GetUserLikes([FromQuery]UserLikesParams user)
+   public async Task<IActionResult> GetUserLikes([FromQuery]UserLikesParams user)  //means it can contain null
    {
        var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
     

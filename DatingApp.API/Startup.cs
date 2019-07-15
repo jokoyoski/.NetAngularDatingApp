@@ -26,6 +26,7 @@ using AutoMapper;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.IdentityModel.Logging;
+using Microsoft.AspNetCore.Identity;
 
 namespace DatingApp.API
 {
@@ -40,22 +41,41 @@ namespace DatingApp.API
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)  
-        {  IdentityModelEventSource.ShowPII = true;
+        {  
+//  You need to use the same user data model in SignInManager and UserManager
+   IdentityBuilder builder =services.AddIdentityCore<User>(Options=>{
+
+       Options.Password.RequireNonAlphanumeric=false;
+       Options.Password.RequireDigit=false;
+       Options.Password.RequiredLength=4;
+       Options.Password.RequireUppercase=false;
+   });
+   builder=new IdentityBuilder(builder.UserType,typeof(Role),builder.Services);
+   builder.AddEntityFrameworkStores<DataContext>();  // the data context i want to use to save all the user info
+   builder.AddRoleValidator<RoleValidator<Role>>();
+   builder.AddRoleManager<RoleManager<Role>>();
+   builder.AddSignInManager<SignInManager<User>>();
+          
+           
             //this line was added after we added dbcontext                                                                                    //where defaultconnection in the appsettings.json we sepcify //this was added after we added connection string
             services.AddDbContext<DataContext>(x=>x.UseSqlServer(Configuration.GetConnectionString("DevConnection")));    //1 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
             services.AddCors();
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+            Mapper.Reset();
             services.AddAutoMapper();  // we added automapper here and we  inject it in users class and create a profile class to add it
-            services.AddTransient<UserSeed>(); //seeding
+          services.AddTransient<UserSeed>(); //seeding
             services.AddScoped<IDatingRepository,DatingRepository>();
              services.AddScoped<IDatingService,DatingService>();
              services.AddScoped<IAuthService,AuthService>();
+
               services.AddScoped<IUserFactory,UserFactory>();
+                services.AddScoped<IAuthRepository,AuthRepository>();
                 services.AddScoped<LogUserActivity>();   //LogUserActivity
               
-            services.AddScoped<IAuthRepository,AuthRepository>(); //dependency
-            //authentication middleware for authorize
+
+     
+            //authentication middleware for jwt authorize
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options=>{options.TokenValidationParameters=new TokenValidationParameters
             {
                 ValidateIssuerSigningKey=true,
@@ -64,6 +84,12 @@ namespace DatingApp.API
                 ValidateAudience=false
                
             };});
+
+               services.AddAuthorization(Options=>{   // we added this to specify roles in the Authhorixe action method
+                Options.AddPolicy("RequiredAdminRole",policy=>policy.RequireRole("Admin"));
+                 Options.AddPolicy("RequiredModeratorRole",policy=>policy.RequireRole("Admin","Moderator"));
+                  Options.AddPolicy("VipOnle",policy=>policy.RequireRole("VIP"));
+            });
 
                   //it was when i added this line that the models state were showing properly on the angular including the
                   //interceptor
@@ -107,7 +133,7 @@ namespace DatingApp.API
             
 
            // app.UseHttpsRedirection();
-       // userSeed.SeedUsers();
+          //  userSeed.SeedUsers();
            app.UseCors(x=>x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());  //cors 
            app.UseAuthentication();  //for authentication middleware   
             app.UseDefaultFiles();

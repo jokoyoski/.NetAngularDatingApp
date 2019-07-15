@@ -28,9 +28,9 @@ this.dataContext=dataContext;
             var user=  dataContext.Users.FirstOrDefault(x=>x.UserName==userName);
             if(user==null)
             return null;
-            if(!VerifyPasswordHash(Password,user.PasswordHash,user.PasswordSalt)){
- return null;
-            }
+         //   if(!VerifyPasswordHash(Password,user.PasswordHash,user.PasswordSalt)){
+ ///return null;
+      //      }
            
             return user;
         }
@@ -54,9 +54,9 @@ private bool VerifyPasswordHash(string password, byte[] passwordHash,byte[] pass
              byte [] passwordHash,passwordSalt;
             CreatePasswordHash(password,out passwordHash,out passwordSalt);
             
-                   user.PasswordHash=passwordHash;
-                      user.PasswordSalt=passwordSalt;
-                      user.Password=null;
+                  // user.PasswordHash=passwordHash;
+                   //   user.PasswordSalt=passwordSalt;
+                 //     user.Password=null;
                
 
                        try{

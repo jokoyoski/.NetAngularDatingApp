@@ -13,9 +13,11 @@ namespace DatingApp.API.Queries
         internal static IQueryable<User> GetAllUsers(UserParams user,DataContext dataContext)
         {
             var result=(from  b in dataContext.Users
-            where user.UserId != b.id
+            where user.UserId != b.Id
             where user.Gender==b.Gender
-                join c in dataContext.Photos on b.id equals c.Id
+                join c in dataContext.Photos on b.Id equals c.UserId into userPhoto
+                 from usero in userPhoto.DefaultIfEmpty()
+                
               select  new User
               {
                   UserName=b.UserName,
@@ -30,13 +32,12 @@ namespace DatingApp.API.Queries
                   Country=b.Country,
                   Created=b.Created,
                   City=b.City,
-                  id=b.id,
-                  PhotoUrl=c.URl
-
+                  Id=b.Id,
+                  
 
               }
             
-            ).OrderBy(x=>x.id);
+            ).OrderBy(x=>x.Id);
              return result;
         }
        
@@ -82,13 +83,13 @@ namespace DatingApp.API.Queries
        {
          var result=(from b in dataContext.Likes
          where b.LikeeId==id
-         join  u in dataContext.Users on b.LikerId equals u.id
+         join  u in dataContext.Users on b.LikerId equals u.Id
          join s in dataContext.Photos on b.LikerId equals s.UserId into userPhotos
          from user in  userPhotos.DefaultIfEmpty()
 where user.IsMain==true
          select new UserLike{
          
-         Id=u.id,
+         Id=u.Id,
          KnownAs=u.KnownAs,
          City=u.City,
          PhotoUrl=user.URl
@@ -106,14 +107,14 @@ where user.IsMain==true
        {
          var result=(from b in dataContext.Likes
          where b.LikerId==id
-         join  u in dataContext.Users on b.LikeeId equals u.id 
+         join  u in dataContext.Users on b.LikeeId equals u.Id 
          join s in dataContext.Photos on b.LikeeId equals s.UserId into userPhoto
         
          from user in  userPhoto.DefaultIfEmpty()
  where user.IsMain==true
          select new UserLike{
          
-         Id=u.id,
+         Id=u.Id,
          KnownAs=u.KnownAs,
          City=u.City,
          PhotoUrl=user.URl
@@ -130,8 +131,8 @@ where user.IsMain==true
        {
          var result=(from b in dataContext.messages
          where  b.SenderId==userId && b.RecipientId==recipientId && b.SenderDeleted==false|| b.ReceipientDeleted==false&&  b.RecipientId==userId && b.SenderId==recipientId
-    join c in dataContext.Users on b.RecipientId equals c.id 
-          join d in dataContext.Users on b.SenderId equals d.id
+    join c in dataContext.Users on b.RecipientId equals c.Id 
+          join d in dataContext.Users on b.SenderId equals d.Id
           join e in dataContext.Photos on b.SenderId equals e.UserId into userPhoto
            from userPhotos in userPhoto.DefaultIfEmpty()
           where userPhotos.IsMain==true
@@ -162,8 +163,8 @@ where user.IsMain==true
      internal static IQueryable<Message> GetMessageList(DataContext dataContext)
        {
          var result=(from b in dataContext.messages
-         join c in dataContext.Users on b.RecipientId equals c.id 
-          join d in dataContext.Users on b.SenderId equals d.id
+         join c in dataContext.Users on b.RecipientId equals c.Id 
+          join d in dataContext.Users on b.SenderId equals d.Id
           join e in dataContext.Photos on b.SenderId equals e.UserId into userPhoto
            from userPhotos in userPhoto.DefaultIfEmpty()
           where userPhotos.IsMain==true
@@ -195,8 +196,8 @@ where user.IsMain==true
       internal static Message GetThreadDetails(int userId,int recipientId,DataContext dataContext)
       {
         var result=(from c in dataContext.Users
-        join d in dataContext.Users on userId equals d.id
-        join e in dataContext.Users on recipientId equals e.id
+        join d in dataContext.Users on userId equals d.Id
+        join e in dataContext.Users on recipientId equals e.Id
          join f in dataContext.Photos on userId equals f.UserId into userPhoto
            from userPhotos in userPhoto.DefaultIfEmpty()
           where userPhotos.IsMain==true
@@ -257,7 +258,7 @@ PublicId=b.PublicId,
        internal static User GetUserById(int UserId,DataContext dataContext)
         {
             var result=(from  b in dataContext.Users
-            where b.id==UserId
+            where b.Id==UserId
               
            // join c in dataContext.Photos on b.id equals c.UserId into a
           
@@ -280,7 +281,7 @@ PublicId=b.PublicId,
                   Country=b.Country,
                   Created=b.Created,
                   City=b.City,
-                  id=b.id,
+                  Id=b.Id,
                 //   PhotoUrl=photos.URl
 
 

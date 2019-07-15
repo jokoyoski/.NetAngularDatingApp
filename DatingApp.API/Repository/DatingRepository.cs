@@ -153,6 +153,17 @@ namespace DatingApp.API.Interface
         {
             
             var users=DatingQuery.GetAllUsers( user,dataContext);
+            foreach(var j in users)
+            {
+                var pic=dataContext.Photos.FirstOrDefault(x=>x.UserId==j.Id && x.IsMain==true);
+                if(pic!=null)
+                {
+                    j.PhotoUrl=pic.URl;
+                }else{
+                    j.PhotoUrl="http://res.cloudinary.com/jokoyoski/image/upload/v1561462165/wud1igxoqg0pvvtxwgeb.png";
+                }
+                
+            }
         if(user.OrderBy=="lastactive")
         {
           users=users.OrderByDescending(u=>u.LastActive);
@@ -284,7 +295,7 @@ Id= Photo.Id;
             {
                 
                  
-            var userData= this.dataContext.Users.FirstOrDefault(x=>x.id==id);
+            var userData= this.dataContext.Users.FirstOrDefault(x=>x.Id==id);
                userData.Interests=user.Interests;
                userData.Country=user.Country;
                userData.Introduction=user.Introduction;
