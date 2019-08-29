@@ -90,6 +90,7 @@ public  async Task<IActionResult> Register(UserForRegisterDTO userForRegisterDTO
    var results= await this._signInManager.CheckPasswordSignInAsync(userInfo,userForRegisterDTO.password,false);
    if(!results.Succeeded)
    {
+       
   return BadRequest("You are not authorized");
    }
 

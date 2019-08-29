@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
- declare let alertify : any;
+declare let alertify: any;
 @Injectable({
   providedIn: 'root'
 })
@@ -9,35 +9,26 @@ constructor() { }
 
 
 
-confirm( message:any ,okCallback:()=>any)
- 
-
-
-{
-alertify.confirm(message,function(e)
-{
-  if(e)
-  {
+confirm( message: any , okCallback: () => any) {
+alertify.confirm(message, function(e) {
+  if (e) {
     okCallback();
 
-  }else{}
-})
+  } else {}
+});
 
 
 
 
 }
 
-success(message:string)
-{
+success(message: string) {
   alertify.success(message);
 }
-error (message:string)
-{
-  alertify.error(message)
+error(message: string) {
+  alertify.error(message);
 }
-warning (message :string)
-{
-  alertify.warning(message)
+warning(message: string) {
+  alertify.warning(message);
 }
 }

@@ -32,9 +32,9 @@ this.photoUrl.next(photoUrl);   // the behaviour subject has a next attr which s
 }
 
 login(model: any) {
-        console.log(this.mainUrl);
-        return this.http.post('http://jokoyoski200-001-site1.itempurl.com/api/auth/login', model)
-        .pipe( // the post is an observable so we always need to pipe an observable
+        console.log("joko");
+        return this.http.post('http://localhost:5000/api/auth/login', model)
+        .pipe( 
 
           map((response: any) => {   // maping of the values
 
@@ -95,7 +95,7 @@ login(model: any) {
 
 
         register(model: any) {
-          return this.http.post('http://jokoyoski200-001-site1.itempurl.com/api/Auth/Register', model);
+          return this.http.post('http://localhost:5000/api/Auth/Register', model);
         }
           loggedIn() {
           const token = localStorage.getItem('token');

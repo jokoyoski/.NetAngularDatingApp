@@ -4,7 +4,7 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import { AppComponent } from './app.component';
 // tslint:disable-next-line: import-spacing
 import {TimeAgoPipe}  from 'time-ago-pipe';
-import { HttpClientModule } from '@angular/common/http';
+
 import { NavComponent } from './nav/nav.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -39,6 +39,7 @@ import { RoleDirective } from 'directives/role.directive';
 import { UserManagmentComponent } from './admin/user-managment/user-managment.component';
 import { PhotoManagmentComponent } from './admin/photo-managment/photo-managment.component';
 import { RolesModalComponent } from './admin/roles-modal/roles-modal.component';
+import { HttpClientModule } from '@angular/common/http';
 
 export function TokenGetter() {
    return localStorage.getItem('token');      // this is the token
@@ -48,6 +49,7 @@ export function TokenGetter() {
       AppComponent,
       NavComponent,
       AdminPanelComponent,
+     
       HomeComponent,
       RegisterComponent,
       ListComponent,
@@ -69,7 +71,7 @@ export function TokenGetter() {
       TabsModule.forRoot(),
       ButtonsModule,
       NgxSpinnerModule,
-      ReactiveFormsModule,
+      ReactiveFormsModule, HttpClientModule,
      
       BrowserModule,
 // tslint:disable-next-line: max-line-length
@@ -88,8 +90,8 @@ export function TokenGetter() {
             tokenGetter: TokenGetter
          ,
 // tslint:disable-next-line: max-line-length  //
-       whitelistedDomains: ['jokoyoski200-001-site1.itempurl.com'],  // we just got the token from (Token Getter function above) and we  send request , it is automatically sending token
-       blacklistedRoutes: ['jokoyoski200-001-site1.itempurl.com/api/auth']  // we dont want to send token to this address
+       whitelistedDomains: ['localhost:5000'],  // we just got the token from (Token Getter function above) and we  send request , it is automatically sending token
+       blacklistedRoutes: ['localhost:5000/api/auth']  // we dont want to send token to this address
       }
       })
    ],

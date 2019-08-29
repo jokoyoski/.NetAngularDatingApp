@@ -20,7 +20,7 @@ export  const appRoutes: Routes = [
 {
 path:'',
 runGuardsAndResolvers:'always',
-canActivate:[AuthGuard],
+
 children:[
 // tslint:disable-next-line: max-line-length
 {path: 'members/:id', component : MemberDetailComponent, resolve: {user: MemberDetailResolver} },  // we specify this for url that has parameter

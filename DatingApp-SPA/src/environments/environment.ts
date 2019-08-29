@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiURL:'jokoyoski200-001-site1.itempurl.com/api/'
+  apiURL:'http:localhost:5000/api/'
 };
 
 /*

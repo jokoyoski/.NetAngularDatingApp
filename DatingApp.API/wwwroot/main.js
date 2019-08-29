@@ -1460,6 +1460,7 @@ var AppModule = /** @class */ (function () {
                 _app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
                 _nav_nav_component__WEBPACK_IMPORTED_MODULE_7__["NavComponent"],
                 _admin_admin_panel_admin_panel_component__WEBPACK_IMPORTED_MODULE_28__["AdminPanelComponent"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpClientModule"],
                 _home_home_component__WEBPACK_IMPORTED_MODULE_11__["HomeComponent"],
                 _register_register_component__WEBPACK_IMPORTED_MODULE_12__["RegisterComponent"],
                 _list_list_component__WEBPACK_IMPORTED_MODULE_14__["ListComponent"],
@@ -2644,7 +2645,6 @@ var appRoutes = [
     {
         path: '',
         runGuardsAndResolvers: 'always',
-        canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_4__["AuthGuard"]],
         children: [
             // tslint:disable-next-line: max-line-length
             { path: 'members/:id', component: _members_member_detail_member_detail_component__WEBPACK_IMPORTED_MODULE_5__["MemberDetailComponent"], resolve: { user: src_resolvers_member_detail_resolver__WEBPACK_IMPORTED_MODULE_6__["MemberDetailResolver"] } },
